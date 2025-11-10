@@ -18,7 +18,9 @@ public class MemberController {
     private final MemberService memberService;
 
     @PostMapping
-    public ResponseEntity<?> joinMember(@Validated @RequestBody MemberJoinDto memberJoinDto) {
+    public ResponseEntity<String> joinMember(@Validated @RequestBody MemberJoinDto memberJoinDto) {
         memberService.join(memberJoinDto);
+
+        return ResponseEntity.status(201).body("회원가입 성공");
     }
 }
