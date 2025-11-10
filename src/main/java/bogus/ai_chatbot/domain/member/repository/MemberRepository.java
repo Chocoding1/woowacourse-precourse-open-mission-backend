@@ -1,6 +1,6 @@
-package bogus.ai_chatbot.repository;
+package bogus.ai_chatbot.domain.member.repository;
 
-import bogus.ai_chatbot.domain.Member;
+import bogus.ai_chatbot.domain.member.entity.Member;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface MemberRepository extends JpaRepository<Member, Long> {

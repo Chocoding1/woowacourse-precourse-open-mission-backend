@@ -1,4 +1,4 @@
-package bogus.ai_chatbot.domain;
+package bogus.ai_chatbot.domain.member.entity;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;

@@ -1,7 +1,7 @@
-package bogus.ai_chatbot.controller;
+package bogus.ai_chatbot.domain.member.controller;
 
-import bogus.ai_chatbot.domain.MemberJoinDto;
-import bogus.ai_chatbot.service.MemberService;
+import bogus.ai_chatbot.domain.member.dto.MemberJoinDto;
+import bogus.ai_chatbot.domain.member.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;

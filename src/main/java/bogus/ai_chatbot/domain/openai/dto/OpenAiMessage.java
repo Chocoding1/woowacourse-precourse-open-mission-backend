@@ -1,4 +1,4 @@
-package bogus.ai_chatbot.dto;
+package bogus.ai_chatbot.domain.openai.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

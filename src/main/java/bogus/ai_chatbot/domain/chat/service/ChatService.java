@@ -1,6 +1,7 @@
-package bogus.ai_chatbot.service;
+package bogus.ai_chatbot.domain.chat.service;
 
-import bogus.ai_chatbot.dto.OpenAiResponse;
+import bogus.ai_chatbot.domain.openai.dto.OpenAiResponse;
+import bogus.ai_chatbot.domain.openai.service.OpenAiClient;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

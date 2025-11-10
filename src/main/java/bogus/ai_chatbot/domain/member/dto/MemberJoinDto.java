@@ -1,5 +1,6 @@
-package bogus.ai_chatbot.domain;
+package bogus.ai_chatbot.domain.member.dto;
 
+import bogus.ai_chatbot.domain.member.entity.Member;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Builder;
 import lombok.Getter;

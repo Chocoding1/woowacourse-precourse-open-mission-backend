@@ -1,13 +1,12 @@
 package bogus.ai_chatbot.service;
 
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
-import bogus.ai_chatbot.domain.Member;
-import bogus.ai_chatbot.domain.MemberJoinDto;
-import bogus.ai_chatbot.repository.MemberRepository;
-import org.assertj.core.api.Assertions;
+import bogus.ai_chatbot.domain.member.entity.Member;
+import bogus.ai_chatbot.domain.member.dto.MemberJoinDto;
+import bogus.ai_chatbot.domain.member.repository.MemberRepository;
+import bogus.ai_chatbot.domain.member.service.MemberService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

@@ -1,8 +1,8 @@
-package bogus.ai_chatbot.service;
+package bogus.ai_chatbot.domain.openai.service;
 
-import bogus.ai_chatbot.dto.OpenAiMessage;
-import bogus.ai_chatbot.dto.OpenAiRequest;
-import bogus.ai_chatbot.dto.OpenAiResponse;
+import bogus.ai_chatbot.domain.openai.dto.OpenAiMessage;
+import bogus.ai_chatbot.domain.openai.dto.OpenAiRequest;
+import bogus.ai_chatbot.domain.openai.dto.OpenAiResponse;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

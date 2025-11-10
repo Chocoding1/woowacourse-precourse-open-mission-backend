@@ -1,7 +1,7 @@
-package bogus.ai_chatbot.service;
+package bogus.ai_chatbot.domain.member.service;
 
-import bogus.ai_chatbot.domain.MemberJoinDto;
-import bogus.ai_chatbot.repository.MemberRepository;
+import bogus.ai_chatbot.domain.member.dto.MemberJoinDto;
+import bogus.ai_chatbot.domain.member.repository.MemberRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;

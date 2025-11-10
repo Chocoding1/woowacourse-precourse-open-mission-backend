@@ -1,8 +1,8 @@
-package bogus.ai_chatbot.controller;
+package bogus.ai_chatbot.domain.chat.controller;
 
-import bogus.ai_chatbot.dto.ChatRequest;
-import bogus.ai_chatbot.dto.ChatResponse;
-import bogus.ai_chatbot.service.ChatService;
+import bogus.ai_chatbot.domain.chat.dto.ChatRequest;
+import bogus.ai_chatbot.domain.chat.dto.ChatResponse;
+import bogus.ai_chatbot.domain.chat.service.ChatService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
