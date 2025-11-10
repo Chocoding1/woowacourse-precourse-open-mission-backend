@@ -2,6 +2,7 @@ package bogus.ai_chatbot.domain.email.service;
 
 import bogus.ai_chatbot.domain.email.dto.EmailDto;
 import bogus.ai_chatbot.domain.member.repository.MemberRepository;
+import bogus.ai_chatbot.domain.redis.service.RedisService;
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
 import jakarta.transaction.Transactional;
@@ -18,16 +19,19 @@ public class EmailService {
 
     private final JavaMailSender javaMailSender;
     private final MemberRepository memberRepository;
+    private final RedisService redisService;
 
     public void sendVerificationCode(EmailDto emailDto) throws MessagingException {
         String email = emailDto.getEmail();
 
         validateDuplicateEmail(email);
 
-        int code = createAuthCode();
+        String code = createAuthCode();
         MimeMessage emailForm = createEmailForm(email, code);
 
         javaMailSender.send(emailForm);
+
+        redisService.saveEmailAuthCode(email, code);
     }
 
     private void validateDuplicateEmail(String email) {
@@ -40,11 +44,11 @@ public class EmailService {
         return memberRepository.existsByEmail(email);
     }
 
-    private int createAuthCode() {
-        return new Random().nextInt(900000) + 100000;
+    private String createAuthCode() {
+        return String.valueOf(new Random().nextInt(900000) + 100000);
     }
 
-    private MimeMessage createEmailForm(String email, int code) throws MessagingException {
+    private MimeMessage createEmailForm(String email, String code) throws MessagingException {
         MimeMessage message = javaMailSender.createMimeMessage();
         MimeMessageHelper helper = new MimeMessageHelper(message, true, "UTF-8");
 
