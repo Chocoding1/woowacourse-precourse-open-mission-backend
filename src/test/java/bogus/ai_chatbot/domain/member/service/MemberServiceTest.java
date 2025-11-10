@@ -3,6 +3,7 @@ package bogus.ai_chatbot.domain.member.service;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.Mockito.*;
 
+import bogus.ai_chatbot.domain.email.service.EmailService;
 import bogus.ai_chatbot.domain.member.entity.Member;
 import bogus.ai_chatbot.domain.member.dto.MemberJoinDto;
 import bogus.ai_chatbot.domain.member.repository.MemberRepository;
@@ -24,6 +25,8 @@ class MemberServiceTest {
     MemberRepository memberRepository;
     @Mock
     BCryptPasswordEncoder bCryptPasswordEncoder;
+    @Mock
+    EmailService emailService;
 
     @Test
     @DisplayName("정상 회원가입 테스트")
@@ -45,5 +48,27 @@ class MemberServiceTest {
         verify(memberRepository, times(1)).existsByEmail(anyString());
         verify(bCryptPasswordEncoder, times(1)).encode(anyString());
         verify(memberRepository, times(1)).save(any(Member.class));
+    }
+
+    @Test
+    @DisplayName("이메일 미인증 시 예외 발생")
+    void checkVerifiedEmail_fail_when_unauthenticated_email() {
+        //given
+        MemberJoinDto memberJoinDto = MemberJoinDto.builder()
+                .email("email")
+                .password("password")
+                .name("name")
+                .build();
+
+        when(emailService.isEmailVerified(anyString())).thenReturn(false);
+
+        //when & then
+        assertThatThrownBy(() -> memberService.join(memberJoinDto))
+                .isInstanceOf(RuntimeException.class)
+                .hasMessage("이메일 인증이 되지 않았습니다.");
+
+        verify(emailService, times(1)).isEmailVerified(anyString());
+        verify(bCryptPasswordEncoder, never()).encode(anyString());
+        verify(memberRepository, never()).save(any(Member.class));
     }
 }
