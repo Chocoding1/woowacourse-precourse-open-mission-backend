@@ -1,5 +1,6 @@
 package bogus.ai_chatbot.domain.email.service;
 
+import static org.assertj.core.api.Assertions.*;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
@@ -15,7 +16,7 @@ import bogus.ai_chatbot.domain.member.repository.MemberRepository;
 import bogus.ai_chatbot.domain.redis.service.RedisService;
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
-import java.util.Optional;
+import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -26,6 +27,8 @@ import org.springframework.mail.javamail.JavaMailSender;
 
 @ExtendWith(MockitoExtension.class)
 class EmailServiceTest {
+
+    private static final String VERIFIED_MESSAGE = "verified";
 
     @InjectMocks
     EmailService emailService;
@@ -42,7 +45,7 @@ class EmailServiceTest {
     void sendAuthCode_success() throws MessagingException {
         //given
         EmailDto emailDto = EmailDto.builder()
-                .email("email")
+                .email("email@naver.com")
                 .build();
         MimeMessage mockMessage = mock(MimeMessage.class);
 
@@ -65,7 +68,7 @@ class EmailServiceTest {
     void sendAuthCode_fail_when_duplicate_email() {
         //given
         EmailDto emailDto = EmailDto.builder()
-                .email("duplicateEmail")
+                .email("dupli@naver.com")
                 .build();
 
         when(memberRepository.existsByEmail(anyString())).thenReturn(true);
@@ -139,5 +142,36 @@ class EmailServiceTest {
 
         verify(redisService, times(1)).getEmailAuthCode(anyString());
         verify(redisService, never()).saveEmailAuthCode(anyString(), anyString());
+    }
+
+    @Test
+    @DisplayName("인증된 이메일일 경우 true 반환 테스트")
+    void isEmailVerified_success() {
+        //given
+        String email = "email@naver.com";
+
+        when(redisService.getEmailAuthCode(anyString())).thenReturn(VERIFIED_MESSAGE);
+
+        //when
+        boolean isVerified = emailService.isEmailVerified(email);
+
+        //then
+        assertThat(isVerified).isTrue();
+    }
+
+    @Test
+    @DisplayName("인증되지 않은 이메일일 경우 false 반환 테스트")
+    void isEmailVerified_fail_not_verified_email() {
+        //given
+        String email = "email@naver.com";
+        String findMessage = "unVerified";
+
+        when(redisService.getEmailAuthCode(anyString())).thenReturn(findMessage);
+
+        //when
+        boolean isVerified = emailService.isEmailVerified(email);
+
+        //then
+        Assertions.assertThat(isVerified).isFalse();
     }
 }
