@@ -1,9 +1,11 @@
 package bogus.ai_chatbot.domain;
 
 import jakarta.validation.constraints.NotBlank;
+import lombok.Builder;
 import lombok.Getter;
 
 @Getter
+@Builder
 public class MemberJoinDto {
 
     @NotBlank(message = "이메일은 필수입니다.")
