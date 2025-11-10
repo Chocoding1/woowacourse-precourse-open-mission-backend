@@ -15,6 +15,7 @@ import bogus.ai_chatbot.domain.member.repository.MemberRepository;
 import bogus.ai_chatbot.domain.redis.service.RedisService;
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
+import java.util.Optional;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -76,5 +77,67 @@ class EmailServiceTest {
 
         verify(javaMailSender, never()).createMimeMessage();
         verify(javaMailSender, never()).send(any(MimeMessage.class));
+    }
+
+    @Test
+    @DisplayName("이메일 인증 번호 검증 성공 테스트")
+    void verifyAuthCode_success() {
+        //given
+        String authCode = "authCode";
+        EmailDto emailDto = EmailDto.builder()
+                .email("email@naver.com")
+                .authCode(authCode)
+                .build();
+
+        when(redisService.getEmailAuthCode(anyString())).thenReturn(authCode);
+        doNothing().when(redisService).saveEmailAuthCode(anyString(), anyString());
+
+        //when
+        emailService.verifyAuthCode(emailDto);
+
+        //then
+        verify(redisService, times(1)).getEmailAuthCode(anyString());
+        verify(redisService, times(1)).saveEmailAuthCode(anyString(), anyString());
+    }
+
+    @Test
+    @DisplayName("해당 이메일의 인증 번호가 존재하지 않을 경우 예외 발생")
+    void verifyAuthCode_fail_when_authCode_null() {
+        //given
+        EmailDto emailDto = EmailDto.builder()
+                .email("email@naver.com")
+                .authCode("authCode")
+                .build();
+
+        when(redisService.getEmailAuthCode(anyString())).thenReturn(null);
+
+        //when & then
+        assertThatThrownBy(() -> emailService.verifyAuthCode(emailDto))
+                .isInstanceOf(RuntimeException.class)
+                .hasMessage("해당 이메일의 인증 번호가 존재하지 않습니다.");
+
+        verify(redisService, times(1)).getEmailAuthCode(anyString());
+        verify(redisService, never()).saveEmailAuthCode(anyString(), anyString());
+    }
+
+    @Test
+    @DisplayName("인증 번호가 일치하지 경우 예외 발생")
+    void verifyAuthCode_fail_when_authCode_not_equal() {
+        //given
+        String invalidAuthCode = "invalidAuthCode";
+        EmailDto emailDto = EmailDto.builder()
+                .email("email@naver.com")
+                .authCode("authCode")
+                .build();
+
+        when(redisService.getEmailAuthCode(anyString())).thenReturn(invalidAuthCode);
+
+        //when & then
+        assertThatThrownBy(() -> emailService.verifyAuthCode(emailDto))
+                .isInstanceOf(RuntimeException.class)
+                .hasMessage("인증 번호가 일치하지 않습니다.");
+
+        verify(redisService, times(1)).getEmailAuthCode(anyString());
+        verify(redisService, never()).saveEmailAuthCode(anyString(), anyString());
     }
 }
