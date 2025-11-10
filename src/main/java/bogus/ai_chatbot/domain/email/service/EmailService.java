@@ -39,6 +39,7 @@ public class EmailService {
     public void verifyAuthCode(EmailDto emailDto) {
         String email = emailDto.getEmail();
         String findAuthCode = redisService.getEmailAuthCode(email);
+
         if (findAuthCode == null) {
             throw new RuntimeException("해당 이메일의 인증 번호가 존재하지 않습니다.");
         }
@@ -48,6 +49,12 @@ public class EmailService {
         }
 
         redisService.saveEmailAuthCode(email, VERIFIED_MESSAGE);
+    }
+
+    public boolean isEmailVerified(String email) {
+        String verifiedMessage = redisService.getEmailAuthCode(email);
+
+        return VERIFIED_MESSAGE.equals(verifiedMessage);
     }
 
     private void validateDuplicateEmail(String email) {
