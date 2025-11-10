@@ -3,7 +3,6 @@ package bogus.ai_chatbot.service;
 import bogus.ai_chatbot.domain.MemberJoinDto;
 import bogus.ai_chatbot.repository.MemberRepository;
 import jakarta.transaction.Transactional;
-import jakarta.validation.constraints.NotBlank;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
