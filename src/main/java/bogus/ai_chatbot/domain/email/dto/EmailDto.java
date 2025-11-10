@@ -8,5 +8,5 @@ import lombok.Getter;
 public class EmailDto {
 
     private String email;
-    private String verificationCode;
+    private String authCode;
 }

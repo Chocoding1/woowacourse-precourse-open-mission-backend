@@ -24,7 +24,7 @@ public class EmailService {
 
         validateDuplicateEmail(email);
 
-        int code = createVerificationCode();
+        int code = createAuthCode();
         MimeMessage emailForm = createEmailForm(email, code);
 
         javaMailSender.send(emailForm);
@@ -40,7 +40,7 @@ public class EmailService {
         return memberRepository.existsByEmail(email);
     }
 
-    private int createVerificationCode() {
+    private int createAuthCode() {
         return new Random().nextInt(900000) + 100000;
     }
 
