@@ -19,8 +19,13 @@ public class EmailController {
 
     @PostMapping("/send-code")
     public ResponseEntity<String> sendCode(@RequestBody EmailDto emailDto) throws MessagingException {
-        emailService.sendVerificationCode(emailDto);
+        emailService.sendAuthCode(emailDto);
 
         return ResponseEntity.ok("인증번호 전송 완료");
     }
+
+//    @PostMapping("/verify-code")
+//    public ResponseEntity<String> verifyCode(@RequestBody EmailDto emailDto) {
+//        emailService.verifyAuthCode(emailDto);
+//    }
 }

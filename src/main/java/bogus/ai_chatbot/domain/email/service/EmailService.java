@@ -21,7 +21,7 @@ public class EmailService {
     private final MemberRepository memberRepository;
     private final RedisService redisService;
 
-    public void sendVerificationCode(EmailDto emailDto) throws MessagingException {
+    public void sendAuthCode(EmailDto emailDto) throws MessagingException {
         String email = emailDto.getEmail();
 
         validateDuplicateEmail(email);
