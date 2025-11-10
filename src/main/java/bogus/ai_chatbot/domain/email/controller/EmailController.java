@@ -24,8 +24,10 @@ public class EmailController {
         return ResponseEntity.ok("인증번호 전송 완료");
     }
 
-//    @PostMapping("/verify-code")
-//    public ResponseEntity<String> verifyCode(@RequestBody EmailDto emailDto) {
-//        emailService.verifyAuthCode(emailDto);
-//    }
+    @PostMapping("/verify-code")
+    public ResponseEntity<String> verifyCode(@RequestBody EmailDto emailDto) {
+        emailService.verifyAuthCode(emailDto);
+
+        return ResponseEntity.ok("이메일 인증 성공");
+    }
 }

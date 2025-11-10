@@ -17,6 +17,8 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class EmailService {
 
+    private static final String VERIFIED_MESSAGE = "verified";
+
     private final JavaMailSender javaMailSender;
     private final MemberRepository memberRepository;
     private final RedisService redisService;
@@ -32,6 +34,20 @@ public class EmailService {
         javaMailSender.send(emailForm);
 
         redisService.saveEmailAuthCode(email, code);
+    }
+
+    public void verifyAuthCode(EmailDto emailDto) {
+        String email = emailDto.getEmail();
+        String findAuthCode = redisService.getEmailAuthCode(email);
+        if (findAuthCode == null) {
+            throw new RuntimeException("해당 이메일의 인증 번호가 존재하지 않습니다.");
+        }
+
+        if (!emailDto.getAuthCode().equals(findAuthCode)) {
+            throw new RuntimeException("인증 번호가 일치하지 않습니다.");
+        }
+
+        redisService.saveEmailAuthCode(email, VERIFIED_MESSAGE);
     }
 
     private void validateDuplicateEmail(String email) {
