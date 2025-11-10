@@ -16,21 +16,9 @@ public class MemberService {
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
     public void join(MemberJoinDto memberJoinDto) {
-        validateDuplicateEmail(memberJoinDto.getEmail());
-
         encodeRawPassword(memberJoinDto);
 
         memberRepository.save(memberJoinDto.toEntity());
-    }
-
-    private void validateDuplicateEmail(String email) {
-        if (existSameEmail(email)) {
-            throw new RuntimeException("이미 해당 이메일로 가입한 이력이 있습니다.");
-        }
-    }
-
-    private boolean existSameEmail(String email) {
-        return memberRepository.existsByEmail(email);
     }
 
     private void encodeRawPassword(MemberJoinDto memberJoinDto) {
