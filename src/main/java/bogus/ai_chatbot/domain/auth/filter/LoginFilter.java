@@ -22,7 +22,7 @@ public class LoginFilter extends UsernamePasswordAuthenticationFilter {
 
     @Override
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) throws AuthenticationException {
-        log.info("LoginFilter");
+        log.info("LoginFilter -> attemptAuthentication");
 
         ObjectMapper objectMapper = new ObjectMapper();
         MemberLoginDto memberLoginDto;
@@ -42,7 +42,6 @@ public class LoginFilter extends UsernamePasswordAuthenticationFilter {
     protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain,
                                             Authentication authentication) {
         log.info("LoginFilter -> successfulAuthentication");
-
 
     }
 }
