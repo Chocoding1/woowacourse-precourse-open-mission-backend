@@ -28,6 +28,11 @@ public class SecurityConfig {
                 .formLogin(FormLoginConfigurer::disable)
                 .httpBasic(HttpBasicConfigurer::disable)
 
+                .authorizeHttpRequests(auth -> auth
+                        .requestMatchers("/members", "/emails/**").permitAll()
+                        .anyRequest().authenticated()
+                )
+
                 .sessionManagement(session -> session
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS));
 
