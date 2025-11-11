@@ -1,6 +1,7 @@
 package bogus.ai_chatbot.domain.jwt.util;
 
 import bogus.ai_chatbot.domain.jwt.dto.JwtInfoDto;
+import bogus.ai_chatbot.domain.redis.service.RedisService;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
 import java.nio.charset.StandardCharsets;
@@ -15,13 +16,16 @@ public class JwtUtil {
     private final SecretKey secretKey;
     private final Long accessTokenExpireMs;
     private final Long refreshTokenExpireMs;
+    private final RedisService redisService;
 
     public JwtUtil(@Value("${jwt.secret-key}") String secretKey,
                    @Value("${jwt.expiration-time.access}") Long accessTokenExpireMs,
-                   @Value("${jwt.expiration-time.refresh}") Long refreshTokenExpireMs) {
+                   @Value("${jwt.expiration-time.refresh}") Long refreshTokenExpireMs,
+                   RedisService redisService) {
         this.secretKey = Keys.hmacShaKeyFor(secretKey.getBytes(StandardCharsets.UTF_8));
         this.accessTokenExpireMs = accessTokenExpireMs;
         this.refreshTokenExpireMs = refreshTokenExpireMs;
+        this.redisService = redisService;
     }
 
     public JwtInfoDto createJwt(Long id) {
@@ -45,12 +49,16 @@ public class JwtUtil {
     }
 
     private String createRefreshToken(Long id) {
-        return Jwts.builder()
+        String refreshToken = Jwts.builder()
                 .claim("category", "refresh")
                 .claim("id", id)
                 .issuedAt(new Date(System.currentTimeMillis()))
                 .expiration(new Date(System.currentTimeMillis() + refreshTokenExpireMs))
                 .signWith(secretKey)
                 .compact();
+
+        redisService.saveRefreshToken(id, refreshToken);
+
+        return refreshToken;
     }
 }
