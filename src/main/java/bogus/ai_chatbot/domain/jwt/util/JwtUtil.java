@@ -28,6 +28,10 @@ public class JwtUtil {
         this.redisService = redisService;
     }
 
+    public void validateToken(String token) {
+        Jwts.parser().verifyWith(secretKey).build().parseSignedClaims(token);
+    }
+
     public JwtInfoDto createJwt(Long id) {
         String accessToken = createAccessToken(id);
         String refreshToken = createRefreshToken(id);
