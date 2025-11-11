@@ -1,5 +1,6 @@
 package bogus.ai_chatbot.config;
 
+import bogus.ai_chatbot.domain.auth.filter.JwtAuthenticationFilter;
 import bogus.ai_chatbot.domain.auth.filter.LoginFilter;
 import bogus.ai_chatbot.domain.jwt.util.JwtUtil;
 import lombok.RequiredArgsConstructor;
@@ -51,6 +52,7 @@ public class SecurityConfig {
                 .sessionManagement(session -> session
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
 
+                .addFilterBefore(new JwtAuthenticationFilter(jwtUtil), LoginFilter.class)
                 .addFilterAt(new LoginFilter(authenticationManager(authenticationConfiguration), jwtUtil), UsernamePasswordAuthenticationFilter.class);
 
         return http.build();
