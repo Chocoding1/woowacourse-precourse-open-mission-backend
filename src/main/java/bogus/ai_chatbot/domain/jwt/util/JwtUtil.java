@@ -36,6 +36,10 @@ public class JwtUtil {
         return Jwts.parser().verifyWith(secretKey).build().parseSignedClaims(token).getPayload().get("category", String.class);
     }
 
+    public String getRefreshToken(Long id) {
+        return redisService.getRefreshToken(id);
+    }
+
     public void validateToken(String token) {
         Jwts.parser().verifyWith(secretKey).build().parseSignedClaims(token);
     }

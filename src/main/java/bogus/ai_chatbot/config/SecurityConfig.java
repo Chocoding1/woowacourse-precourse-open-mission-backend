@@ -45,7 +45,7 @@ public class SecurityConfig {
                 .httpBasic(HttpBasicConfigurer::disable)
 
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/members", "/emails/**").permitAll()
+                        .requestMatchers("/members", "/emails/**", "/jwts/reissue").permitAll()
                         .anyRequest().authenticated()
                 )
 

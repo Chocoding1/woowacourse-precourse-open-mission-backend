@@ -31,4 +31,8 @@ public class RedisService {
     public void saveRefreshToken(Long id, String refreshToken) {
         stringRedisTemplate.opsForValue().set(REFRESH_TOKEN_KEY_PREFIX + id, refreshToken, refreshTokenExpiration, TimeUnit.MILLISECONDS);
     }
+
+    public String getRefreshToken(Long id) {
+        return stringRedisTemplate.opsForValue().get(REFRESH_TOKEN_KEY_PREFIX + id);
+    }
 }
