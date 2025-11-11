@@ -44,6 +44,11 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             throw new RuntimeException("유효하지 않은 토큰입니다.");
         }
 
+        String category = jwtUtil.getCategory(accessToken);
+        if (!category.equals("access")) {
+            throw new RuntimeException("유효하지 않은 토큰입니다.");
+        }
+
         Long id = jwtUtil.getId(accessToken);
         saveAuthentication(id);
 
