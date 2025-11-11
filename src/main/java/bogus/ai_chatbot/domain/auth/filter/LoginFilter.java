@@ -1,4 +1,4 @@
-package bogus.ai_chatbot.domain.jwt;
+package bogus.ai_chatbot.domain.auth.filter;
 
 import bogus.ai_chatbot.domain.member.dto.MemberLoginDto;
 import com.fasterxml.jackson.databind.ObjectMapper;

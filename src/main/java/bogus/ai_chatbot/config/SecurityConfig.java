@@ -1,6 +1,6 @@
 package bogus.ai_chatbot.config;
 
-import bogus.ai_chatbot.domain.jwt.LoginFilter;
+import bogus.ai_chatbot.domain.auth.filter.LoginFilter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
