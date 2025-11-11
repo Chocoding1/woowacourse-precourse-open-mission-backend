@@ -1,5 +1,6 @@
 package bogus.ai_chatbot.config;
 
+import bogus.ai_chatbot.domain.auth.filter.CustomLogoutFilter;
 import bogus.ai_chatbot.domain.auth.filter.JwtAuthenticationFilter;
 import bogus.ai_chatbot.domain.auth.filter.LoginFilter;
 import bogus.ai_chatbot.domain.jwt.util.JwtUtil;
@@ -18,6 +19,7 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.authentication.logout.LogoutFilter;
 
 @Configuration
 @EnableWebSecurity
@@ -43,7 +45,7 @@ public class SecurityConfig {
         http
                 .csrf(CsrfConfigurer::disable)
                 .formLogin(FormLoginConfigurer::disable)
-//                .logout(LogoutConfigurer::disable)
+                .logout(LogoutConfigurer::disable)
                 .httpBasic(HttpBasicConfigurer::disable)
 
                 .authorizeHttpRequests(auth -> auth
@@ -54,6 +56,7 @@ public class SecurityConfig {
                 .sessionManagement(session -> session
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
 
+                .addFilterAt(new CustomLogoutFilter(jwtUtil), LogoutFilter.class)
                 .addFilterAfter(new JwtAuthenticationFilter(jwtUtil), LoginFilter.class)
                 .addFilterAt(new LoginFilter(authenticationManager(authenticationConfiguration), jwtUtil), UsernamePasswordAuthenticationFilter.class);
 

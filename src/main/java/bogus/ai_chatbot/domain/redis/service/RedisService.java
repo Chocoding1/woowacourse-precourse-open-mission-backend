@@ -35,4 +35,8 @@ public class RedisService {
     public String getRefreshToken(Long id) {
         return stringRedisTemplate.opsForValue().get(REFRESH_TOKEN_KEY_PREFIX + id);
     }
+
+    public void deleteRefreshToken(Long id) {
+        stringRedisTemplate.delete(REFRESH_TOKEN_KEY_PREFIX + id);
+    }
 }

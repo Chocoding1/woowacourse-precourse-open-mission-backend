@@ -44,6 +44,10 @@ public class JwtUtil {
         Jwts.parser().verifyWith(secretKey).build().parseSignedClaims(token);
     }
 
+    public void deleteRefreshToken(Long userId) {
+        redisService.deleteRefreshToken(userId);
+    }
+
     public JwtInfoDto createJwt(Long id) {
         String accessToken = createAccessToken(id);
         String refreshToken = createRefreshToken(id);
