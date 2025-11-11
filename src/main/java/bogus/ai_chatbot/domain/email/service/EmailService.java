@@ -5,7 +5,6 @@ import bogus.ai_chatbot.domain.member.repository.MemberRepository;
 import bogus.ai_chatbot.domain.redis.service.RedisService;
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
-import jakarta.transaction.Transactional;
 import java.util.Random;
 import lombok.RequiredArgsConstructor;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -13,7 +12,6 @@ import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 
 @Service
-@Transactional
 @RequiredArgsConstructor
 public class EmailService {
 
