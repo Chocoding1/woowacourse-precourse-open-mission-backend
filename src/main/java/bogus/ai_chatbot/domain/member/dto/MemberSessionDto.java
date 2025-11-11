@@ -8,11 +8,13 @@ import lombok.Getter;
 @Builder
 public class MemberSessionDto {
 
+    private Long id;
     private String email;
     private String password;
 
     public static MemberSessionDto fromEntity(Member member) {
         return MemberSessionDto.builder()
+                .id(member.getId())
                 .email(member.getEmail())
                 .password(member.getPassword())
                 .build();
