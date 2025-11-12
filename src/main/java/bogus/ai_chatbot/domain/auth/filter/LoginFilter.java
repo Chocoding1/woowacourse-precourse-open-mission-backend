@@ -51,12 +51,7 @@ public class LoginFilter extends UsernamePasswordAuthenticationFilter {
 
         JwtInfoDto jwtInfoDto = jwtUtil.createJwt(customUserDetails.getId());
 
-        response.setHeader("Authorization", "Bearer " + jwtInfoDto.getAccessToken());
-        response.setHeader("Authorization-Refresh", jwtInfoDto.getRefreshToken());
-        response.setStatus(200);
-        response.setCharacterEncoding("utf-8");
-        response.setContentType("application/json");
-        response.getWriter().write("로그인 성공");
+        setResponse(response, jwtInfoDto);
     }
 
     @Override
@@ -74,5 +69,14 @@ public class LoginFilter extends UsernamePasswordAuthenticationFilter {
         } catch (IOException e) {
             throw new CustomException(INVALID_LOGIN_FORM);
         }
+    }
+
+    private static void setResponse(HttpServletResponse response, JwtInfoDto jwtInfoDto) throws IOException {
+        response.setHeader("Authorization", "Bearer " + jwtInfoDto.getAccessToken());
+        response.setHeader("Authorization-Refresh", jwtInfoDto.getRefreshToken());
+        response.setStatus(200);
+        response.setCharacterEncoding("utf-8");
+        response.setContentType("application/json");
+        response.getWriter().write("로그인 성공");
     }
 }
