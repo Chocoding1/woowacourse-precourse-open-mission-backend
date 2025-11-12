@@ -1,9 +1,11 @@
 package bogus.ai_chatbot.domain.member.service;
 
+import static bogus.ai_chatbot.domain.exception.error.ErrorCode.EMAIL_NOT_VERIFIED;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.Mockito.*;
 
 import bogus.ai_chatbot.domain.email.service.EmailService;
+import bogus.ai_chatbot.domain.exception.exception.BusinessException;
 import bogus.ai_chatbot.domain.member.entity.Member;
 import bogus.ai_chatbot.domain.member.dto.MemberJoinDto;
 import bogus.ai_chatbot.domain.member.repository.MemberRepository;
@@ -38,14 +40,14 @@ class MemberServiceTest {
                 .name("name")
                 .build();
 
-        when(memberRepository.existsByEmail(anyString())).thenReturn(false);
+        when(emailService.isEmailVerified(anyString())).thenReturn(true);
         when(bCryptPasswordEncoder.encode(anyString())).thenReturn(anyString());
 
         //when
         memberService.join(memberJoinDto);
 
         //then
-        verify(memberRepository, times(1)).existsByEmail(anyString());
+        verify(emailService, times(1)).isEmailVerified(anyString());
         verify(bCryptPasswordEncoder, times(1)).encode(anyString());
         verify(memberRepository, times(1)).save(any(Member.class));
     }
@@ -64,8 +66,8 @@ class MemberServiceTest {
 
         //when & then
         assertThatThrownBy(() -> memberService.join(memberJoinDto))
-                .isInstanceOf(RuntimeException.class)
-                .hasMessage("이메일 인증이 되지 않았습니다.");
+                .isInstanceOf(BusinessException.class)
+                .hasMessage(EMAIL_NOT_VERIFIED.getMessage());
 
         verify(emailService, times(1)).isEmailVerified(anyString());
         verify(bCryptPasswordEncoder, never()).encode(anyString());

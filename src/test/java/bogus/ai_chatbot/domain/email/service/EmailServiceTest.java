@@ -1,5 +1,6 @@
 package bogus.ai_chatbot.domain.email.service;
 
+import static bogus.ai_chatbot.domain.exception.error.ErrorCode.*;
 import static org.assertj.core.api.Assertions.*;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.ArgumentMatchers.any;
@@ -12,6 +13,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import bogus.ai_chatbot.domain.email.dto.EmailDto;
+import bogus.ai_chatbot.domain.exception.exception.BusinessException;
 import bogus.ai_chatbot.domain.member.repository.MemberRepository;
 import bogus.ai_chatbot.domain.redis.service.RedisService;
 import jakarta.mail.MessagingException;
@@ -75,8 +77,8 @@ class EmailServiceTest {
 
         //when & then
         assertThatThrownBy(() -> emailService.sendAuthCode(emailDto))
-                .isInstanceOf(RuntimeException.class)
-                .hasMessage("이미 해당 이메일로 가입한 이력이 있습니다.");
+                .isInstanceOf(BusinessException.class)
+                .hasMessage(DUPLICATE_EMAIL.getMessage());
 
         verify(javaMailSender, never()).createMimeMessage();
         verify(javaMailSender, never()).send(any(MimeMessage.class));
@@ -116,8 +118,8 @@ class EmailServiceTest {
 
         //when & then
         assertThatThrownBy(() -> emailService.verifyAuthCode(emailDto))
-                .isInstanceOf(RuntimeException.class)
-                .hasMessage("해당 이메일의 인증 번호가 존재하지 않습니다.");
+                .isInstanceOf(BusinessException.class)
+                .hasMessage(EMAIL_CODE_NULL.getMessage());
 
         verify(redisService, times(1)).getEmailAuthCode(anyString());
         verify(redisService, never()).saveEmailAuthCode(anyString(), anyString());
@@ -137,8 +139,8 @@ class EmailServiceTest {
 
         //when & then
         assertThatThrownBy(() -> emailService.verifyAuthCode(emailDto))
-                .isInstanceOf(RuntimeException.class)
-                .hasMessage("인증 번호가 일치하지 않습니다.");
+                .isInstanceOf(BusinessException.class)
+                .hasMessage(INVALID_EMAIL_CODE.getMessage());
 
         verify(redisService, times(1)).getEmailAuthCode(anyString());
         verify(redisService, never()).saveEmailAuthCode(anyString(), anyString());
