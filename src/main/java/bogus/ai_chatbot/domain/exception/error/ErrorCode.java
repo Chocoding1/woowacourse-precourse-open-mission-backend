@@ -21,6 +21,7 @@ public enum ErrorCode {
     TOKEN_EXPIRED("TOKEN_EXPIRED", HttpStatus.UNAUTHORIZED, "토큰이 만료되었습니다."),
     INVALID_TOKEN("INVALID_TOKEN", HttpStatus.UNAUTHORIZED, "유효하지 않은 토큰입니다."),
     TOKEN_NULL("TOKEN_NULL", HttpStatus.UNAUTHORIZED, "토큰이 존재하지 않습니다."),
+    TOKEN_NOT_SAVED("TOKEN_NOT_SAVED", HttpStatus.UNAUTHORIZED, "토큰이 저장되어 있지 않습니다."),
 
     // EMAIL
     DUPLICATE_EMAIL("DUPLICATE_EMAIL", HttpStatus.CONFLICT, "이미 가입된 이메일입니다."),

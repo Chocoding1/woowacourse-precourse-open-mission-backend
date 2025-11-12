@@ -2,6 +2,7 @@ package bogus.ai_chatbot.domain.jwt.util;
 
 import static bogus.ai_chatbot.domain.exception.error.ErrorCode.INVALID_TOKEN;
 import static bogus.ai_chatbot.domain.exception.error.ErrorCode.TOKEN_EXPIRED;
+import static bogus.ai_chatbot.domain.exception.error.ErrorCode.TOKEN_NOT_SAVED;
 import static bogus.ai_chatbot.domain.exception.error.ErrorCode.TOKEN_NULL;
 
 import bogus.ai_chatbot.domain.exception.exception.AuthException;
@@ -54,7 +55,7 @@ public class JwtUtil {
         String savedRefreshToken = getRefreshToken(id);
 
         if (savedRefreshToken == null) {
-            throw new AuthException(TOKEN_NULL);
+            throw new AuthException(TOKEN_NOT_SAVED);
         }
 
         if (!refreshToken.equals(savedRefreshToken)) {
