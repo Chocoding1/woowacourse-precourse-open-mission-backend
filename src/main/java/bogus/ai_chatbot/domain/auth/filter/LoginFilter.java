@@ -4,8 +4,8 @@ import static bogus.ai_chatbot.domain.exception.error.ErrorCode.INVALID_LOGIN_FO
 import static bogus.ai_chatbot.domain.exception.error.ErrorCode.LOGIN_FAILED;
 
 import bogus.ai_chatbot.domain.auth.dto.CustomUserDetails;
-import bogus.ai_chatbot.domain.exception.CustomAuthException;
-import bogus.ai_chatbot.domain.exception.CustomException;
+import bogus.ai_chatbot.domain.exception.exception.CustomAuthException;
+import bogus.ai_chatbot.domain.exception.exception.CustomException;
 import bogus.ai_chatbot.domain.jwt.dto.JwtInfoDto;
 import bogus.ai_chatbot.domain.jwt.util.JwtUtil;
 import bogus.ai_chatbot.domain.member.dto.MemberLoginDto;

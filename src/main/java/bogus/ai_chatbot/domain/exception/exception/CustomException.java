@@ -1,14 +1,14 @@
-package bogus.ai_chatbot.domain.exception;
+package bogus.ai_chatbot.domain.exception.exception;
 
 import bogus.ai_chatbot.domain.exception.error.ErrorCode;
 import lombok.Getter;
 
 @Getter
-public class CustomAuthException extends RuntimeException {
+public class CustomException extends RuntimeException{
 
     private final ErrorCode errorCode;
 
-    public CustomAuthException(ErrorCode errorCode) {
+    public CustomException(ErrorCode errorCode) {
         super(errorCode.getMessage());
         this.errorCode = errorCode;
     }

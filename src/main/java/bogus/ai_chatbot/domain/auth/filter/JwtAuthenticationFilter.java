@@ -3,7 +3,7 @@ package bogus.ai_chatbot.domain.auth.filter;
 import static bogus.ai_chatbot.domain.exception.error.ErrorCode.TOKEN_NULL;
 
 import bogus.ai_chatbot.domain.auth.dto.CustomUserDetails;
-import bogus.ai_chatbot.domain.exception.CustomAuthException;
+import bogus.ai_chatbot.domain.exception.exception.CustomAuthException;
 import bogus.ai_chatbot.domain.jwt.util.JwtUtil;
 import bogus.ai_chatbot.domain.member.dto.MemberSessionDto;
 import jakarta.servlet.FilterChain;

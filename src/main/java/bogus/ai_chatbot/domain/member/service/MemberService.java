@@ -3,7 +3,7 @@ package bogus.ai_chatbot.domain.member.service;
 import static bogus.ai_chatbot.domain.exception.error.ErrorCode.EMAIL_NOT_VERIFIED;
 
 import bogus.ai_chatbot.domain.email.service.EmailService;
-import bogus.ai_chatbot.domain.exception.CustomException;
+import bogus.ai_chatbot.domain.exception.exception.CustomException;
 import bogus.ai_chatbot.domain.member.dto.MemberJoinDto;
 import bogus.ai_chatbot.domain.member.repository.MemberRepository;
 import jakarta.transaction.Transactional;

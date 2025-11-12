@@ -4,7 +4,7 @@ import static bogus.ai_chatbot.domain.exception.error.ErrorCode.INVALID_TOKEN;
 import static bogus.ai_chatbot.domain.exception.error.ErrorCode.TOKEN_EXPIRED;
 import static bogus.ai_chatbot.domain.exception.error.ErrorCode.TOKEN_NULL;
 
-import bogus.ai_chatbot.domain.exception.CustomAuthException;
+import bogus.ai_chatbot.domain.exception.exception.CustomAuthException;
 import bogus.ai_chatbot.domain.jwt.dto.JwtInfoDto;
 import bogus.ai_chatbot.domain.redis.service.RedisService;
 import io.jsonwebtoken.ExpiredJwtException;

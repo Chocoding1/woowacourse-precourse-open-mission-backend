@@ -5,7 +5,7 @@ import static bogus.ai_chatbot.domain.exception.error.ErrorCode.EMAIL_CODE_NULL;
 import static bogus.ai_chatbot.domain.exception.error.ErrorCode.INVALID_EMAIL_CODE;
 
 import bogus.ai_chatbot.domain.email.dto.EmailDto;
-import bogus.ai_chatbot.domain.exception.CustomException;
+import bogus.ai_chatbot.domain.exception.exception.CustomException;
 import bogus.ai_chatbot.domain.member.repository.MemberRepository;
 import bogus.ai_chatbot.domain.redis.service.RedisService;
 import jakarta.mail.MessagingException;
