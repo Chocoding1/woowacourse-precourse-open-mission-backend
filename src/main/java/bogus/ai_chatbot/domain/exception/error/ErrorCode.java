@@ -28,7 +28,7 @@ public enum ErrorCode {
     EMAIL_CODE_NULL("EMAIL_CODE_NULL", HttpStatus.BAD_REQUEST, "해당 이메일의 인증 번호가 존재하지 않습니다."),
 
     // REQUEST
-    INVALID_METHOD("INVALID_METHOD", HttpStatus.METHOD_NOT_ALLOWED, "잘못된 요청 메서드입니다.");1
+    INVALID_METHOD("INVALID_METHOD", HttpStatus.METHOD_NOT_ALLOWED, "잘못된 요청 메서드입니다.");
 
     private final String code;
     private final HttpStatus status;
