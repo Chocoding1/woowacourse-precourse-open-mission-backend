@@ -1,6 +1,7 @@
 package bogus.ai_chatbot.config;
 
 import bogus.ai_chatbot.domain.auth.filter.CustomLogoutFilter;
+import bogus.ai_chatbot.domain.auth.filter.ExceptionHandlerFilter;
 import bogus.ai_chatbot.domain.auth.filter.JwtAuthenticationFilter;
 import bogus.ai_chatbot.domain.auth.filter.LoginFilter;
 import bogus.ai_chatbot.domain.jwt.util.JwtUtil;
@@ -57,8 +58,9 @@ public class SecurityConfig {
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
 
                 .addFilterAt(new CustomLogoutFilter(jwtUtil), LogoutFilter.class)
-                .addFilterAfter(new JwtAuthenticationFilter(jwtUtil), LoginFilter.class)
-                .addFilterAt(new LoginFilter(authenticationManager(authenticationConfiguration), jwtUtil), UsernamePasswordAuthenticationFilter.class);
+                .addFilterBefore(new ExceptionHandlerFilter(), CustomLogoutFilter.class)
+                .addFilterAt(new LoginFilter(authenticationManager(authenticationConfiguration), jwtUtil), UsernamePasswordAuthenticationFilter.class)
+                .addFilterAfter(new JwtAuthenticationFilter(jwtUtil), LoginFilter.class);
 
         return http.build();
     }
