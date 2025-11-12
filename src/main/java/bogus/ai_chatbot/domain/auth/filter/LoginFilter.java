@@ -4,6 +4,7 @@ import static bogus.ai_chatbot.domain.exception.error.ErrorCode.INVALID_LOGIN_FO
 import static bogus.ai_chatbot.domain.exception.error.ErrorCode.LOGIN_FAILED;
 
 import bogus.ai_chatbot.domain.auth.dto.CustomUserDetails;
+import bogus.ai_chatbot.domain.exception.CustomAuthException;
 import bogus.ai_chatbot.domain.exception.CustomException;
 import bogus.ai_chatbot.domain.jwt.dto.JwtInfoDto;
 import bogus.ai_chatbot.domain.jwt.util.JwtUtil;
@@ -63,7 +64,7 @@ public class LoginFilter extends UsernamePasswordAuthenticationFilter {
                                               AuthenticationException failed) throws IOException, ServletException {
         log.info("LoginFilter -> unsuccessfulAuthentication");
 
-        throw new CustomException(LOGIN_FAILED);
+        throw new CustomAuthException(LOGIN_FAILED);
     }
 
     private static MemberLoginDto getMemberLoginDto(HttpServletRequest request) {

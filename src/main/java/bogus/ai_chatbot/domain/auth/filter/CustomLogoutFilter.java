@@ -3,6 +3,7 @@ package bogus.ai_chatbot.domain.auth.filter;
 import static bogus.ai_chatbot.domain.exception.error.ErrorCode.INVALID_TOKEN;
 import static bogus.ai_chatbot.domain.exception.error.ErrorCode.TOKEN_NULL;
 
+import bogus.ai_chatbot.domain.exception.CustomAuthException;
 import bogus.ai_chatbot.domain.exception.CustomException;
 import bogus.ai_chatbot.domain.jwt.util.JwtUtil;
 import jakarta.servlet.FilterChain;
@@ -45,22 +46,13 @@ public class CustomLogoutFilter extends GenericFilterBean {
 
         String refreshToken = request.getHeader("Authorization-Refresh");
         if (refreshToken == null) {
-            throw new CustomException(TOKEN_NULL);
+            throw new CustomAuthException(TOKEN_NULL);
         }
 
-        Long userId = jwtUtil.getId(refreshToken);
-        String savedRefreshToken = jwtUtil.getRefreshToken(userId);
+        jwtUtil.validateTokenSame(refreshToken);
+        jwtUtil.validateRefreshCategory(refreshToken);
 
-        if (!refreshToken.equals(savedRefreshToken)) {
-            throw new CustomException(INVALID_TOKEN);
-        }
-
-        String category = jwtUtil.getCategory(refreshToken);
-        if (!category.equals("refresh")) {
-            throw new CustomException(INVALID_TOKEN);
-        }
-
-        jwtUtil.deleteRefreshToken(userId);
+        jwtUtil.deleteRefreshToken(refreshToken);
 
         response.setStatus(200);
         response.setCharacterEncoding("utf-8");

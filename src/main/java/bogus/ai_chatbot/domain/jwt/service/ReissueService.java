@@ -1,14 +1,10 @@
 package bogus.ai_chatbot.domain.jwt.service;
 
-import static bogus.ai_chatbot.domain.exception.error.ErrorCode.INVALID_TOKEN;
-import static bogus.ai_chatbot.domain.exception.error.ErrorCode.TOKEN_EXPIRED;
 import static bogus.ai_chatbot.domain.exception.error.ErrorCode.TOKEN_NULL;
 
-import bogus.ai_chatbot.domain.exception.CustomException;
+import bogus.ai_chatbot.domain.exception.CustomAuthException;
 import bogus.ai_chatbot.domain.jwt.dto.JwtInfoDto;
 import bogus.ai_chatbot.domain.jwt.util.JwtUtil;
-import io.jsonwebtoken.ExpiredJwtException;
-import io.jsonwebtoken.JwtException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -20,31 +16,18 @@ public class ReissueService {
 
     public JwtInfoDto reissueToken(String refreshToken) {
         if (refreshToken == null) {
-            throw new CustomException(TOKEN_NULL);
+            throw new CustomAuthException(TOKEN_NULL);
         }
 
+        validateToken(refreshToken);
+
         Long userId = jwtUtil.getId(refreshToken);
-
-        validateToken(refreshToken, userId);
-
         return jwtUtil.createJwt(userId);
     }
 
-    private void validateToken(String refreshToken, Long userId) {
+    private void validateToken(String refreshToken) {
         jwtUtil.validateToken(refreshToken);
         jwtUtil.validateRefreshCategory(refreshToken);
-
-        validateSameToken(refreshToken, userId);
-    }
-
-    private void validateSameToken(String refreshToken, Long userId) {
-        String savedRefreshToken = jwtUtil.getRefreshToken(userId);
-        if (savedRefreshToken == null) {
-            throw new CustomException(TOKEN_NULL);
-        }
-
-        if (!savedRefreshToken.equals(refreshToken)) {
-            throw new CustomException(INVALID_TOKEN);
-        }
+        jwtUtil.validateTokenSame(refreshToken);
     }
 }

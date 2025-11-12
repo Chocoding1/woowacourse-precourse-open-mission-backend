@@ -2,8 +2,9 @@ package bogus.ai_chatbot.domain.jwt.util;
 
 import static bogus.ai_chatbot.domain.exception.error.ErrorCode.INVALID_TOKEN;
 import static bogus.ai_chatbot.domain.exception.error.ErrorCode.TOKEN_EXPIRED;
+import static bogus.ai_chatbot.domain.exception.error.ErrorCode.TOKEN_NULL;
 
-import bogus.ai_chatbot.domain.exception.CustomException;
+import bogus.ai_chatbot.domain.exception.CustomAuthException;
 import bogus.ai_chatbot.domain.jwt.dto.JwtInfoDto;
 import bogus.ai_chatbot.domain.redis.service.RedisService;
 import io.jsonwebtoken.ExpiredJwtException;
@@ -38,12 +39,12 @@ public class JwtUtil {
         return Jwts.parser().verifyWith(secretKey).build().parseSignedClaims(token).getPayload().get("id", Long.class);
     }
 
-    public String getCategory(String token) {
+    private String getCategory(String token) {
         return Jwts.parser().verifyWith(secretKey).build().parseSignedClaims(token).getPayload()
                 .get("category", String.class);
     }
 
-    public String getRefreshToken(Long id) {
+    private String getRefreshToken(Long id) {
         return redisService.getRefreshToken(id);
     }
 
@@ -51,28 +52,41 @@ public class JwtUtil {
         try {
             Jwts.parser().verifyWith(secretKey).build().parseSignedClaims(token);
         } catch (ExpiredJwtException e) {
-            throw new CustomException(TOKEN_EXPIRED);
+            throw new CustomAuthException(TOKEN_EXPIRED);
         } catch (JwtException e) {
-            throw new CustomException(INVALID_TOKEN);
+            throw new CustomAuthException(INVALID_TOKEN);
+        }
+    }
+
+    public void validateTokenSame(String refreshToken) {
+        Long id = getId(refreshToken);
+        String savedRefreshToken = getRefreshToken(id);
+
+        if (savedRefreshToken == null) {
+            throw new CustomAuthException(TOKEN_NULL);
+        }
+
+        if (!refreshToken.equals(savedRefreshToken)) {
+            throw new CustomAuthException(INVALID_TOKEN);
         }
     }
 
     public void validateAccessCategory(String accessToken) {
         String category = getCategory(accessToken);
         if (!category.equals("access")) {
-            throw new CustomException(INVALID_TOKEN);
+            throw new CustomAuthException(INVALID_TOKEN);
         }
     }
 
     public void validateRefreshCategory(String refreshToken) {
         String category = getCategory(refreshToken);
         if (!category.equals("refresh")) {
-            throw new CustomException(INVALID_TOKEN);
+            throw new CustomAuthException(INVALID_TOKEN);
         }
     }
 
-    public void deleteRefreshToken(Long userId) {
-        redisService.deleteRefreshToken(userId);
+    public void deleteRefreshToken(String refreshToken) {
+        redisService.deleteRefreshToken(getId(refreshToken));
     }
 
     public JwtInfoDto createJwt(Long id) {

@@ -1,15 +1,11 @@
 package bogus.ai_chatbot.domain.auth.filter;
 
-import static bogus.ai_chatbot.domain.exception.error.ErrorCode.INVALID_TOKEN;
-import static bogus.ai_chatbot.domain.exception.error.ErrorCode.TOKEN_EXPIRED;
 import static bogus.ai_chatbot.domain.exception.error.ErrorCode.TOKEN_NULL;
 
 import bogus.ai_chatbot.domain.auth.dto.CustomUserDetails;
-import bogus.ai_chatbot.domain.exception.CustomException;
+import bogus.ai_chatbot.domain.exception.CustomAuthException;
 import bogus.ai_chatbot.domain.jwt.util.JwtUtil;
 import bogus.ai_chatbot.domain.member.dto.MemberSessionDto;
-import io.jsonwebtoken.ExpiredJwtException;
-import io.jsonwebtoken.JwtException;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -34,13 +30,11 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         log.info("JwtAuthenticationFilter -> doFilterInternal");
 
         String accessHeader = request.getHeader("Authorization");
-
         if (accessHeader == null || !accessHeader.startsWith("Bearer ")) {
-            throw new CustomException(TOKEN_NULL);
+            throw new CustomAuthException(TOKEN_NULL);
         }
 
         String accessToken = accessHeader.split(" ")[1];
-
         jwtUtil.validateToken(accessToken);
         jwtUtil.validateAccessCategory(accessToken);
 
