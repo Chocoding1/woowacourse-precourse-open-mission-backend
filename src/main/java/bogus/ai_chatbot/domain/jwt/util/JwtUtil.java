@@ -57,6 +57,20 @@ public class JwtUtil {
         }
     }
 
+    public void validateAccessCategory(String accessToken) {
+        String category = getCategory(accessToken);
+        if (!category.equals("access")) {
+            throw new CustomException(INVALID_TOKEN);
+        }
+    }
+
+    public void validateRefreshCategory(String refreshToken) {
+        String category = getCategory(refreshToken);
+        if (!category.equals("refresh")) {
+            throw new CustomException(INVALID_TOKEN);
+        }
+    }
+
     public void deleteRefreshToken(Long userId) {
         redisService.deleteRefreshToken(userId);
     }

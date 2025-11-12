@@ -32,12 +32,12 @@ public class ReissueService {
 
     private void validateToken(String refreshToken, Long userId) {
         jwtUtil.validateToken(refreshToken);
+        jwtUtil.validateRefreshCategory(refreshToken);
 
-        String category = jwtUtil.getCategory(refreshToken);
-        if (!category.equals("refresh")) {
-            throw new CustomException(INVALID_TOKEN);
-        }
+        validateSameToken(refreshToken, userId);
+    }
 
+    private void validateSameToken(String refreshToken, Long userId) {
         String savedRefreshToken = jwtUtil.getRefreshToken(userId);
         if (savedRefreshToken == null) {
             throw new CustomException(TOKEN_NULL);
