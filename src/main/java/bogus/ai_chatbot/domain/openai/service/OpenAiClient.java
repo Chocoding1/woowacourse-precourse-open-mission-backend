@@ -15,17 +15,20 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
 @Component
-@RequiredArgsConstructor
 @Slf4j
 public class OpenAiClient {
 
     private final RestTemplate restTemplate;
+    private final String apiUrl;
+    private final String model;
 
-    @Value("${openai.api-url}")
-    private String apiUrl;
-
-    @Value("${openai.model}")
-    private String model;
+    public OpenAiClient(RestTemplate restTemplate,
+                        @Value("${openai.api-url}") String apiUrl,
+                        @Value("${openai.model}") String model) {
+        this.restTemplate = restTemplate;
+        this.apiUrl = apiUrl;
+        this.model = model;
+    }
 
     public OpenAiResponse getAiResponse(String prompt) {
         OpenAiRequest openAiRequest = createOpenAiRequest(prompt);
