@@ -1,5 +1,6 @@
 package bogus.ai_chatbot.domain.auth.filter;
 
+import static bogus.ai_chatbot.domain.exception.error.ErrorCode.INVALID_METHOD;
 import static bogus.ai_chatbot.domain.exception.error.ErrorCode.INVALID_TOKEN;
 import static bogus.ai_chatbot.domain.exception.error.ErrorCode.TOKEN_NULL;
 
@@ -41,7 +42,7 @@ public class CustomLogoutFilter extends GenericFilterBean {
 
         String requestMethod = request.getMethod();
         if (!requestMethod.equals("POST")) {
-            throw new RuntimeException("잘못된 요청 메서드입니다.");
+            throw new CustomAuthException(INVALID_METHOD);
         }
 
         String refreshToken = request.getHeader("Authorization-Refresh");

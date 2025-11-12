@@ -25,7 +25,10 @@ public enum ErrorCode {
     // EMAIL
     DUPLICATE_EMAIL("DUPLICATE_EMAIL", HttpStatus.CONFLICT, "이미 가입된 이메일입니다."),
     INVALID_EMAIL_CODE("INVALID_EMAIL_CODE", HttpStatus.BAD_REQUEST, "이메일 인증 코드가 일치하지 않습니다."),
-    EMAIL_CODE_NULL("EMAIL_CODE_NULL", HttpStatus.BAD_REQUEST, "해당 이메일의 인증 번호가 존재하지 않습니다.");
+    EMAIL_CODE_NULL("EMAIL_CODE_NULL", HttpStatus.BAD_REQUEST, "해당 이메일의 인증 번호가 존재하지 않습니다."),
+
+    // REQUEST
+    INVALID_METHOD("INVALID_METHOD", HttpStatus.METHOD_NOT_ALLOWED, "잘못된 요청 메서드입니다.");1
 
     private final String code;
     private final HttpStatus status;
