@@ -6,6 +6,7 @@ import bogus.ai_chatbot.domain.security.dto.CustomUserDetails;
 import bogus.ai_chatbot.domain.exception.exception.AuthException;
 import bogus.ai_chatbot.domain.jwt.util.JwtUtil;
 import bogus.ai_chatbot.domain.member.dto.MemberSessionDto;
+import bogus.ai_chatbot.domain.security.properties.PermitPaths;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -16,6 +17,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.util.AntPathMatcher;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 @Slf4j
@@ -23,11 +25,20 @@ import org.springframework.web.filter.OncePerRequestFilter;
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
     private final JwtUtil jwtUtil;
+    private final PermitPaths permitPaths;
+    private final AntPathMatcher pathMatcher = new AntPathMatcher();
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
             throws ServletException, IOException {
         log.info("JwtAuthenticationFilter -> doFilterInternal");
+
+        String requestURI = request.getRequestURI();
+        if (isPermitPaths(requestURI)) {
+            log.info("Permit Path : " + requestURI);
+            filterChain.doFilter(request, response);
+            return;
+        }
 
         String accessHeader = request.getHeader("Authorization");
         if (accessHeader == null || !accessHeader.startsWith("Bearer ")) {
@@ -42,6 +53,11 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         saveAuthentication(id);
 
         filterChain.doFilter(request, response);
+    }
+
+    private boolean isPermitPaths(String requestURI) {
+        return permitPaths.getPaths().stream()
+                .anyMatch(path -> pathMatcher.match(path, requestURI));
     }
 
     private void saveAuthentication(Long id) {

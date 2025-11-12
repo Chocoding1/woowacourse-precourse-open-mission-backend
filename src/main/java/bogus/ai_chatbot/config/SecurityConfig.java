@@ -5,6 +5,7 @@ import bogus.ai_chatbot.domain.security.filter.ExceptionHandlerFilter;
 import bogus.ai_chatbot.domain.security.filter.JwtAuthenticationFilter;
 import bogus.ai_chatbot.domain.security.filter.LoginFilter;
 import bogus.ai_chatbot.domain.jwt.util.JwtUtil;
+import bogus.ai_chatbot.domain.security.properties.PermitPaths;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -29,6 +30,7 @@ public class SecurityConfig {
 
     private final AuthenticationConfiguration authenticationConfiguration;
     private final JwtUtil jwtUtil;
+    private final PermitPaths permitPaths;
 
     @Bean
     public BCryptPasswordEncoder bCryptPasswordEncoder() {
@@ -50,7 +52,7 @@ public class SecurityConfig {
                 .httpBasic(HttpBasicConfigurer::disable)
 
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/members", "/emails/**", "/jwts/reissue").permitAll()
+                        .requestMatchers(getPermitPaths(permitPaths)).permitAll()
                         .anyRequest().authenticated()
                 )
 
@@ -59,9 +61,14 @@ public class SecurityConfig {
 
                 .addFilterAt(new CustomLogoutFilter(jwtUtil), LogoutFilter.class)
                 .addFilterBefore(new ExceptionHandlerFilter(), CustomLogoutFilter.class)
-                .addFilterAt(new LoginFilter(authenticationManager(authenticationConfiguration), jwtUtil), UsernamePasswordAuthenticationFilter.class)
-                .addFilterAfter(new JwtAuthenticationFilter(jwtUtil), LoginFilter.class);
+                .addFilterAt(new LoginFilter(authenticationManager(authenticationConfiguration), jwtUtil),
+                        UsernamePasswordAuthenticationFilter.class)
+                .addFilterAfter(new JwtAuthenticationFilter(jwtUtil, permitPaths), LoginFilter.class);
 
         return http.build();
+    }
+
+    private String[] getPermitPaths(PermitPaths permitPaths) {
+        return permitPaths.getPaths().toArray(String[]::new);
     }
 }
