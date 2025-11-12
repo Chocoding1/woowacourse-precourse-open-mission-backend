@@ -1,5 +1,9 @@
 package bogus.ai_chatbot.domain.auth.filter;
 
+import static bogus.ai_chatbot.domain.exception.error.ErrorCode.INVALID_TOKEN;
+import static bogus.ai_chatbot.domain.exception.error.ErrorCode.TOKEN_NULL;
+
+import bogus.ai_chatbot.domain.exception.CustomException;
 import bogus.ai_chatbot.domain.jwt.util.JwtUtil;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -41,19 +45,19 @@ public class CustomLogoutFilter extends GenericFilterBean {
 
         String refreshToken = request.getHeader("Authorization-Refresh");
         if (refreshToken == null) {
-            throw new RuntimeException("토큰이 존재하지 않습니다.");
+            throw new CustomException(TOKEN_NULL);
         }
 
         Long userId = jwtUtil.getId(refreshToken);
         String savedRefreshToken = jwtUtil.getRefreshToken(userId);
 
         if (!refreshToken.equals(savedRefreshToken)) {
-            throw new RuntimeException("유효하지 않은 토큰입니다.");
+            throw new CustomException(INVALID_TOKEN);
         }
 
         String category = jwtUtil.getCategory(refreshToken);
         if (!category.equals("refresh")) {
-            throw new RuntimeException("유효하지 않은 토큰입니다.");
+            throw new CustomException(INVALID_TOKEN);
         }
 
         jwtUtil.deleteRefreshToken(userId);

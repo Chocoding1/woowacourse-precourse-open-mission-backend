@@ -1,6 +1,11 @@
 package bogus.ai_chatbot.domain.auth.filter;
 
+import static bogus.ai_chatbot.domain.exception.error.ErrorCode.INVALID_TOKEN;
+import static bogus.ai_chatbot.domain.exception.error.ErrorCode.TOKEN_EXPIRED;
+import static bogus.ai_chatbot.domain.exception.error.ErrorCode.TOKEN_NULL;
+
 import bogus.ai_chatbot.domain.auth.dto.CustomUserDetails;
+import bogus.ai_chatbot.domain.exception.CustomException;
 import bogus.ai_chatbot.domain.jwt.util.JwtUtil;
 import bogus.ai_chatbot.domain.member.dto.MemberSessionDto;
 import io.jsonwebtoken.ExpiredJwtException;
@@ -31,7 +36,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         String accessHeader = request.getHeader("Authorization");
 
         if (accessHeader == null || !accessHeader.startsWith("Bearer ")) {
-            throw new RuntimeException("토큰이 존재하지 않습니다.");
+            throw new CustomException(TOKEN_NULL);
         }
 
         String accessToken = accessHeader.split(" ")[1];
@@ -39,14 +44,14 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         try {
             jwtUtil.validateToken(accessToken);
         } catch (ExpiredJwtException e) {
-            throw new RuntimeException("토큰이 만료되었습니다.");
+            throw new CustomException(TOKEN_EXPIRED);
         } catch (JwtException e) {
-            throw new RuntimeException("유효하지 않은 토큰입니다.");
+            throw new CustomException(INVALID_TOKEN);
         }
 
         String category = jwtUtil.getCategory(accessToken);
         if (!category.equals("access")) {
-            throw new RuntimeException("유효하지 않은 토큰입니다.");
+            throw new CustomException(INVALID_TOKEN);
         }
 
         Long id = jwtUtil.getId(accessToken);

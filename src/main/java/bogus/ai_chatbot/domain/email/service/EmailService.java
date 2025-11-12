@@ -1,6 +1,11 @@
 package bogus.ai_chatbot.domain.email.service;
 
+import static bogus.ai_chatbot.domain.exception.error.ErrorCode.DUPLICATE_EMAIL;
+import static bogus.ai_chatbot.domain.exception.error.ErrorCode.EMAIL_CODE_NULL;
+import static bogus.ai_chatbot.domain.exception.error.ErrorCode.INVALID_EMAIL_CODE;
+
 import bogus.ai_chatbot.domain.email.dto.EmailDto;
+import bogus.ai_chatbot.domain.exception.CustomException;
 import bogus.ai_chatbot.domain.member.repository.MemberRepository;
 import bogus.ai_chatbot.domain.redis.service.RedisService;
 import jakarta.mail.MessagingException;
@@ -39,11 +44,11 @@ public class EmailService {
         String findAuthCode = redisService.getEmailAuthCode(email);
 
         if (findAuthCode == null) {
-            throw new RuntimeException("해당 이메일의 인증 번호가 존재하지 않습니다.");
+            throw new CustomException(EMAIL_CODE_NULL);
         }
 
         if (!emailDto.getAuthCode().equals(findAuthCode)) {
-            throw new RuntimeException("인증 번호가 일치하지 않습니다.");
+            throw new CustomException(INVALID_EMAIL_CODE);
         }
 
         redisService.saveEmailAuthCode(email, VERIFIED_MESSAGE);
@@ -57,7 +62,7 @@ public class EmailService {
 
     private void validateDuplicateEmail(String email) {
         if (existSameEmail(email)) {
-            throw new RuntimeException("이미 해당 이메일로 가입한 이력이 있습니다.");
+            throw new CustomException(DUPLICATE_EMAIL);
         }
     }
 

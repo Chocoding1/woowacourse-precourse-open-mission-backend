@@ -1,5 +1,8 @@
 package bogus.ai_chatbot.domain.openai.service;
 
+import static bogus.ai_chatbot.domain.exception.error.ErrorCode.OPENAI_REQUEST_FAILED;
+
+import bogus.ai_chatbot.domain.exception.CustomException;
 import bogus.ai_chatbot.domain.openai.dto.OpenAiMessage;
 import bogus.ai_chatbot.domain.openai.dto.OpenAiRequest;
 import bogus.ai_chatbot.domain.openai.dto.OpenAiResponse;
@@ -26,7 +29,6 @@ public class OpenAiClient {
 
     public OpenAiResponse getAiResponse(String prompt) {
         OpenAiRequest openAiRequest = createOpenAiRequest(prompt);
-        log.info("openAirequest : " + openAiRequest);
 
         ResponseEntity<OpenAiResponse> AiResponse = restTemplate.postForEntity(
                 apiUrl,
@@ -34,16 +36,13 @@ public class OpenAiClient {
                 OpenAiResponse.class);
 
         if (!AiResponse.getStatusCode().is2xxSuccessful() || AiResponse.getBody() == null) {
-            throw new RuntimeException("OpenAI API 호출 실패");
+            throw new CustomException(OPENAI_REQUEST_FAILED);
         }
-
-        log.info("OpenAiResponse : " + AiResponse.getBody());
 
         return AiResponse.getBody();
     }
 
     private OpenAiRequest createOpenAiRequest(String prompt) {
-        log.info("model : " + model);
         OpenAiMessage userMessage = new OpenAiMessage("user", prompt);
 
         List<OpenAiMessage> messages = List.of(userMessage);

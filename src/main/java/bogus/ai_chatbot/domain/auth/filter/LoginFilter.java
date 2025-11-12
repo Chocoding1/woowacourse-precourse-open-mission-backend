@@ -1,6 +1,10 @@
 package bogus.ai_chatbot.domain.auth.filter;
 
+import static bogus.ai_chatbot.domain.exception.error.ErrorCode.INVALID_LOGIN_FORM;
+import static bogus.ai_chatbot.domain.exception.error.ErrorCode.LOGIN_FAILED;
+
 import bogus.ai_chatbot.domain.auth.dto.CustomUserDetails;
+import bogus.ai_chatbot.domain.exception.CustomException;
 import bogus.ai_chatbot.domain.jwt.dto.JwtInfoDto;
 import bogus.ai_chatbot.domain.jwt.util.JwtUtil;
 import bogus.ai_chatbot.domain.member.dto.MemberLoginDto;
@@ -12,7 +16,6 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.MediaType;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -60,7 +63,7 @@ public class LoginFilter extends UsernamePasswordAuthenticationFilter {
                                               AuthenticationException failed) throws IOException, ServletException {
         log.info("LoginFilter -> unsuccessfulAuthentication");
 
-        throw new RuntimeException("이메일 또는 비밀번호가 유효하지 않습니다.");
+        throw new CustomException(LOGIN_FAILED);
     }
 
     private static MemberLoginDto getMemberLoginDto(HttpServletRequest request) {
@@ -68,7 +71,7 @@ public class LoginFilter extends UsernamePasswordAuthenticationFilter {
         try {
             return objectMapper.readValue(request.getInputStream(), MemberLoginDto.class);
         } catch (IOException e) {
-            throw new RuntimeException("이메일 또는 비밀번호가 유효하지 않습니다.");
+            throw new CustomException(INVALID_LOGIN_FORM);
         }
     }
 }

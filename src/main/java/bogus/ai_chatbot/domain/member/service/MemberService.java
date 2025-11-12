@@ -1,6 +1,9 @@
 package bogus.ai_chatbot.domain.member.service;
 
+import static bogus.ai_chatbot.domain.exception.error.ErrorCode.EMAIL_NOT_VERIFIED;
+
 import bogus.ai_chatbot.domain.email.service.EmailService;
+import bogus.ai_chatbot.domain.exception.CustomException;
 import bogus.ai_chatbot.domain.member.dto.MemberJoinDto;
 import bogus.ai_chatbot.domain.member.repository.MemberRepository;
 import jakarta.transaction.Transactional;
@@ -27,7 +30,7 @@ public class MemberService {
 
     private void checkEmailVerified(String email) {
         if (!emailService.isEmailVerified(email)) {
-            throw new RuntimeException("이메일 인증이 되지 않았습니다.");
+            throw new CustomException(EMAIL_NOT_VERIFIED);
         }
     }
 

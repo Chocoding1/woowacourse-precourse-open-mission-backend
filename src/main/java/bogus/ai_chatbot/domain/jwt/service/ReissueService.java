@@ -1,5 +1,10 @@
 package bogus.ai_chatbot.domain.jwt.service;
 
+import static bogus.ai_chatbot.domain.exception.error.ErrorCode.INVALID_TOKEN;
+import static bogus.ai_chatbot.domain.exception.error.ErrorCode.TOKEN_EXPIRED;
+import static bogus.ai_chatbot.domain.exception.error.ErrorCode.TOKEN_NULL;
+
+import bogus.ai_chatbot.domain.exception.CustomException;
 import bogus.ai_chatbot.domain.jwt.dto.JwtInfoDto;
 import bogus.ai_chatbot.domain.jwt.util.JwtUtil;
 import io.jsonwebtoken.ExpiredJwtException;
@@ -15,7 +20,7 @@ public class ReissueService {
 
     public JwtInfoDto reissueToken(String refreshToken) {
         if (refreshToken == null) {
-            throw new RuntimeException("토큰이 존재하지 않습니다.");
+            throw new CustomException(TOKEN_NULL);
         }
 
         Long userId = jwtUtil.getId(refreshToken);
@@ -29,23 +34,23 @@ public class ReissueService {
         try {
             jwtUtil.validateToken(refreshToken);
         } catch (ExpiredJwtException e) {
-            throw new RuntimeException("토큰이 만료되었습니다.");
+            throw new CustomException(TOKEN_EXPIRED);
         } catch (JwtException e) {
-            throw new RuntimeException("유효하지 않은 토큰입니다.");
+            throw new CustomException(INVALID_TOKEN);
         }
 
         String category = jwtUtil.getCategory(refreshToken);
         if (!category.equals("refresh")) {
-            throw new RuntimeException("유효하지 않은 토큰입니다.");
+            throw new CustomException(INVALID_TOKEN);
         }
 
         String savedRefreshToken = jwtUtil.getRefreshToken(userId);
         if (savedRefreshToken == null) {
-            throw new RuntimeException("토큰이 존재하지 않습니다.");
+            throw new CustomException(TOKEN_NULL);
         }
 
         if (!savedRefreshToken.equals(refreshToken)) {
-            throw new RuntimeException("유효하지 않은 토큰입니다.");
+            throw new CustomException(INVALID_TOKEN);
         }
     }
 }
