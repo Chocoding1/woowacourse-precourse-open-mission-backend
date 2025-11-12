@@ -2,7 +2,7 @@ package bogus.ai_chatbot.domain.jwt.service;
 
 import static bogus.ai_chatbot.domain.exception.error.ErrorCode.TOKEN_NULL;
 
-import bogus.ai_chatbot.domain.exception.exception.CustomAuthException;
+import bogus.ai_chatbot.domain.exception.exception.AuthException;
 import bogus.ai_chatbot.domain.jwt.dto.JwtInfoDto;
 import bogus.ai_chatbot.domain.jwt.util.JwtUtil;
 import lombok.RequiredArgsConstructor;
@@ -16,7 +16,7 @@ public class ReissueService {
 
     public JwtInfoDto reissueToken(String refreshToken) {
         if (refreshToken == null) {
-            throw new CustomAuthException(TOKEN_NULL);
+            throw new AuthException(TOKEN_NULL);
         }
 
         validateToken(refreshToken);

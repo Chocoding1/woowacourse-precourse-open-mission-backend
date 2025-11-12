@@ -4,8 +4,8 @@ import static bogus.ai_chatbot.domain.exception.error.ErrorCode.INVALID_LOGIN_FO
 import static bogus.ai_chatbot.domain.exception.error.ErrorCode.LOGIN_FAILED;
 
 import bogus.ai_chatbot.domain.auth.dto.CustomUserDetails;
-import bogus.ai_chatbot.domain.exception.exception.CustomAuthException;
-import bogus.ai_chatbot.domain.exception.exception.CustomException;
+import bogus.ai_chatbot.domain.exception.exception.AuthException;
+import bogus.ai_chatbot.domain.exception.exception.BusinessException;
 import bogus.ai_chatbot.domain.jwt.dto.JwtInfoDto;
 import bogus.ai_chatbot.domain.jwt.util.JwtUtil;
 import bogus.ai_chatbot.domain.member.dto.MemberLoginDto;
@@ -59,15 +59,15 @@ public class LoginFilter extends UsernamePasswordAuthenticationFilter {
                                               AuthenticationException failed) throws IOException, ServletException {
         log.info("LoginFilter -> unsuccessfulAuthentication");
 
-        throw new CustomAuthException(LOGIN_FAILED);
+        throw new AuthException(LOGIN_FAILED);
     }
 
     private static MemberLoginDto getMemberLoginDto(HttpServletRequest request) {
-        ObjectMapper objectMapper = new ObjectMapper();
+        ObjectMapper om = new ObjectMapper();
         try {
-            return objectMapper.readValue(request.getInputStream(), MemberLoginDto.class);
+            return om.readValue(request.getInputStream(), MemberLoginDto.class);
         } catch (IOException e) {
-            throw new CustomException(INVALID_LOGIN_FORM);
+            throw new BusinessException(INVALID_LOGIN_FORM);
         }
     }
 

@@ -5,7 +5,7 @@ import static bogus.ai_chatbot.domain.exception.error.ErrorCode.EMAIL_CODE_NULL;
 import static bogus.ai_chatbot.domain.exception.error.ErrorCode.INVALID_EMAIL_CODE;
 
 import bogus.ai_chatbot.domain.email.dto.EmailDto;
-import bogus.ai_chatbot.domain.exception.exception.CustomException;
+import bogus.ai_chatbot.domain.exception.exception.BusinessException;
 import bogus.ai_chatbot.domain.member.repository.MemberRepository;
 import bogus.ai_chatbot.domain.redis.service.RedisService;
 import jakarta.mail.MessagingException;
@@ -44,11 +44,11 @@ public class EmailService {
         String findAuthCode = redisService.getEmailAuthCode(email);
 
         if (findAuthCode == null) {
-            throw new CustomException(EMAIL_CODE_NULL);
+            throw new BusinessException(EMAIL_CODE_NULL);
         }
 
         if (!emailDto.getAuthCode().equals(findAuthCode)) {
-            throw new CustomException(INVALID_EMAIL_CODE);
+            throw new BusinessException(INVALID_EMAIL_CODE);
         }
 
         redisService.saveEmailAuthCode(email, VERIFIED_MESSAGE);
@@ -62,7 +62,7 @@ public class EmailService {
 
     private void validateDuplicateEmail(String email) {
         if (existSameEmail(email)) {
-            throw new CustomException(DUPLICATE_EMAIL);
+            throw new BusinessException(DUPLICATE_EMAIL);
         }
     }
 

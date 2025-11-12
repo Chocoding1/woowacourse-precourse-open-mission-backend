@@ -3,7 +3,7 @@ package bogus.ai_chatbot.domain.auth.filter;
 import static bogus.ai_chatbot.domain.exception.error.ErrorCode.TOKEN_NULL;
 
 import bogus.ai_chatbot.domain.auth.dto.CustomUserDetails;
-import bogus.ai_chatbot.domain.exception.exception.CustomAuthException;
+import bogus.ai_chatbot.domain.exception.exception.AuthException;
 import bogus.ai_chatbot.domain.jwt.util.JwtUtil;
 import bogus.ai_chatbot.domain.member.dto.MemberSessionDto;
 import jakarta.servlet.FilterChain;
@@ -31,7 +31,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
         String accessHeader = request.getHeader("Authorization");
         if (accessHeader == null || !accessHeader.startsWith("Bearer ")) {
-            throw new CustomAuthException(TOKEN_NULL);
+            throw new AuthException(TOKEN_NULL);
         }
 
         String accessToken = accessHeader.split(" ")[1];

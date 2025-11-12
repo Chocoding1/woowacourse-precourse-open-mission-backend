@@ -4,7 +4,7 @@ import static bogus.ai_chatbot.domain.exception.error.ErrorCode.INVALID_TOKEN;
 import static bogus.ai_chatbot.domain.exception.error.ErrorCode.TOKEN_EXPIRED;
 import static bogus.ai_chatbot.domain.exception.error.ErrorCode.TOKEN_NULL;
 
-import bogus.ai_chatbot.domain.exception.exception.CustomAuthException;
+import bogus.ai_chatbot.domain.exception.exception.AuthException;
 import bogus.ai_chatbot.domain.jwt.dto.JwtInfoDto;
 import bogus.ai_chatbot.domain.redis.service.RedisService;
 import io.jsonwebtoken.ExpiredJwtException;
@@ -43,9 +43,9 @@ public class JwtUtil {
         try {
             Jwts.parser().verifyWith(secretKey).build().parseSignedClaims(token);
         } catch (ExpiredJwtException e) {
-            throw new CustomAuthException(TOKEN_EXPIRED);
+            throw new AuthException(TOKEN_EXPIRED);
         } catch (JwtException e) {
-            throw new CustomAuthException(INVALID_TOKEN);
+            throw new AuthException(INVALID_TOKEN);
         }
     }
 
@@ -54,25 +54,25 @@ public class JwtUtil {
         String savedRefreshToken = getRefreshToken(id);
 
         if (savedRefreshToken == null) {
-            throw new CustomAuthException(TOKEN_NULL);
+            throw new AuthException(TOKEN_NULL);
         }
 
         if (!refreshToken.equals(savedRefreshToken)) {
-            throw new CustomAuthException(INVALID_TOKEN);
+            throw new AuthException(INVALID_TOKEN);
         }
     }
 
     public void validateAccessCategory(String accessToken) {
         String category = getCategory(accessToken);
         if (!category.equals("access")) {
-            throw new CustomAuthException(INVALID_TOKEN);
+            throw new AuthException(INVALID_TOKEN);
         }
     }
 
     public void validateRefreshCategory(String refreshToken) {
         String category = getCategory(refreshToken);
         if (!category.equals("refresh")) {
-            throw new CustomAuthException(INVALID_TOKEN);
+            throw new AuthException(INVALID_TOKEN);
         }
     }
 

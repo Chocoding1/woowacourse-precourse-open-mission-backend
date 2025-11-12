@@ -2,7 +2,7 @@ package bogus.ai_chatbot.domain.openai.service;
 
 import static bogus.ai_chatbot.domain.exception.error.ErrorCode.OPENAI_REQUEST_FAILED;
 
-import bogus.ai_chatbot.domain.exception.exception.CustomException;
+import bogus.ai_chatbot.domain.exception.exception.BusinessException;
 import bogus.ai_chatbot.domain.openai.dto.OpenAiMessage;
 import bogus.ai_chatbot.domain.openai.dto.OpenAiRequest;
 import bogus.ai_chatbot.domain.openai.dto.OpenAiResponse;
@@ -36,7 +36,7 @@ public class OpenAiClient {
                 OpenAiResponse.class);
 
         if (!AiResponse.getStatusCode().is2xxSuccessful() || AiResponse.getBody() == null) {
-            throw new CustomException(OPENAI_REQUEST_FAILED);
+            throw new BusinessException(OPENAI_REQUEST_FAILED);
         }
 
         return AiResponse.getBody();

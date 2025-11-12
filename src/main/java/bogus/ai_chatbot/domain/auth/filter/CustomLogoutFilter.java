@@ -3,7 +3,7 @@ package bogus.ai_chatbot.domain.auth.filter;
 import static bogus.ai_chatbot.domain.exception.error.ErrorCode.INVALID_METHOD;
 import static bogus.ai_chatbot.domain.exception.error.ErrorCode.TOKEN_NULL;
 
-import bogus.ai_chatbot.domain.exception.exception.CustomAuthException;
+import bogus.ai_chatbot.domain.exception.exception.AuthException;
 import bogus.ai_chatbot.domain.jwt.util.JwtUtil;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -40,12 +40,12 @@ public class CustomLogoutFilter extends GenericFilterBean {
 
         String requestMethod = request.getMethod();
         if (!requestMethod.equals("POST")) {
-            throw new CustomAuthException(INVALID_METHOD);
+            throw new AuthException(INVALID_METHOD);
         }
 
         String refreshToken = request.getHeader("Authorization-Refresh");
         if (refreshToken == null) {
-            throw new CustomAuthException(TOKEN_NULL);
+            throw new AuthException(TOKEN_NULL);
         }
 
         jwtUtil.validateTokenSame(refreshToken);
