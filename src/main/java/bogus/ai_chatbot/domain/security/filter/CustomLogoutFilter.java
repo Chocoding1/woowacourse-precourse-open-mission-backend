@@ -1,4 +1,4 @@
-package bogus.ai_chatbot.domain.auth.filter;
+package bogus.ai_chatbot.domain.security.filter;
 
 import static bogus.ai_chatbot.domain.exception.error.ErrorCode.INVALID_METHOD;
 import static bogus.ai_chatbot.domain.exception.error.ErrorCode.TOKEN_NULL;

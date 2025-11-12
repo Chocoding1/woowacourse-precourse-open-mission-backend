@@ -1,9 +1,9 @@
-package bogus.ai_chatbot.domain.auth.filter;
+package bogus.ai_chatbot.domain.security.filter;
 
 import static bogus.ai_chatbot.domain.exception.error.ErrorCode.INVALID_LOGIN_FORM;
 import static bogus.ai_chatbot.domain.exception.error.ErrorCode.LOGIN_FAILED;
 
-import bogus.ai_chatbot.domain.auth.dto.CustomUserDetails;
+import bogus.ai_chatbot.domain.security.dto.CustomUserDetails;
 import bogus.ai_chatbot.domain.exception.exception.AuthException;
 import bogus.ai_chatbot.domain.exception.exception.BusinessException;
 import bogus.ai_chatbot.domain.jwt.dto.JwtInfoDto;

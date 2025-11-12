@@ -1,9 +1,9 @@
 package bogus.ai_chatbot.config;
 
-import bogus.ai_chatbot.domain.auth.filter.CustomLogoutFilter;
-import bogus.ai_chatbot.domain.auth.filter.ExceptionHandlerFilter;
-import bogus.ai_chatbot.domain.auth.filter.JwtAuthenticationFilter;
-import bogus.ai_chatbot.domain.auth.filter.LoginFilter;
+import bogus.ai_chatbot.domain.security.filter.CustomLogoutFilter;
+import bogus.ai_chatbot.domain.security.filter.ExceptionHandlerFilter;
+import bogus.ai_chatbot.domain.security.filter.JwtAuthenticationFilter;
+import bogus.ai_chatbot.domain.security.filter.LoginFilter;
 import bogus.ai_chatbot.domain.jwt.util.JwtUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;

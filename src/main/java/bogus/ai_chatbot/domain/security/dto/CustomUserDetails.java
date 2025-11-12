@@ -1,4 +1,4 @@
-package bogus.ai_chatbot.domain.auth.dto;
+package bogus.ai_chatbot.domain.security.dto;
 
 import bogus.ai_chatbot.domain.member.dto.MemberSessionDto;
 import java.util.Collection;

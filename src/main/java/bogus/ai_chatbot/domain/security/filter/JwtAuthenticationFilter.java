@@ -1,8 +1,8 @@
-package bogus.ai_chatbot.domain.auth.filter;
+package bogus.ai_chatbot.domain.security.filter;
 
 import static bogus.ai_chatbot.domain.exception.error.ErrorCode.TOKEN_NULL;
 
-import bogus.ai_chatbot.domain.auth.dto.CustomUserDetails;
+import bogus.ai_chatbot.domain.security.dto.CustomUserDetails;
 import bogus.ai_chatbot.domain.exception.exception.AuthException;
 import bogus.ai_chatbot.domain.jwt.util.JwtUtil;
 import bogus.ai_chatbot.domain.member.dto.MemberSessionDto;
