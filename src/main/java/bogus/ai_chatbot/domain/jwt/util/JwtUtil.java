@@ -1,7 +1,13 @@
 package bogus.ai_chatbot.domain.jwt.util;
 
+import static bogus.ai_chatbot.domain.exception.error.ErrorCode.INVALID_TOKEN;
+import static bogus.ai_chatbot.domain.exception.error.ErrorCode.TOKEN_EXPIRED;
+
+import bogus.ai_chatbot.domain.exception.CustomException;
 import bogus.ai_chatbot.domain.jwt.dto.JwtInfoDto;
 import bogus.ai_chatbot.domain.redis.service.RedisService;
+import io.jsonwebtoken.ExpiredJwtException;
+import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
 import java.nio.charset.StandardCharsets;
@@ -33,7 +39,8 @@ public class JwtUtil {
     }
 
     public String getCategory(String token) {
-        return Jwts.parser().verifyWith(secretKey).build().parseSignedClaims(token).getPayload().get("category", String.class);
+        return Jwts.parser().verifyWith(secretKey).build().parseSignedClaims(token).getPayload()
+                .get("category", String.class);
     }
 
     public String getRefreshToken(Long id) {
@@ -41,7 +48,13 @@ public class JwtUtil {
     }
 
     public void validateToken(String token) {
-        Jwts.parser().verifyWith(secretKey).build().parseSignedClaims(token);
+        try {
+            Jwts.parser().verifyWith(secretKey).build().parseSignedClaims(token);
+        } catch (ExpiredJwtException e) {
+            throw new CustomException(TOKEN_EXPIRED);
+        } catch (JwtException e) {
+            throw new CustomException(INVALID_TOKEN);
+        }
     }
 
     public void deleteRefreshToken(Long userId) {

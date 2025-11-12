@@ -41,13 +41,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
         String accessToken = accessHeader.split(" ")[1];
 
-        try {
-            jwtUtil.validateToken(accessToken);
-        } catch (ExpiredJwtException e) {
-            throw new CustomException(TOKEN_EXPIRED);
-        } catch (JwtException e) {
-            throw new CustomException(INVALID_TOKEN);
-        }
+        jwtUtil.validateToken(accessToken);
 
         String category = jwtUtil.getCategory(accessToken);
         if (!category.equals("access")) {

@@ -31,13 +31,7 @@ public class ReissueService {
     }
 
     private void validateToken(String refreshToken, Long userId) {
-        try {
-            jwtUtil.validateToken(refreshToken);
-        } catch (ExpiredJwtException e) {
-            throw new CustomException(TOKEN_EXPIRED);
-        } catch (JwtException e) {
-            throw new CustomException(INVALID_TOKEN);
-        }
+        jwtUtil.validateToken(refreshToken);
 
         String category = jwtUtil.getCategory(refreshToken);
         if (!category.equals("refresh")) {
