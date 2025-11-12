@@ -39,15 +39,6 @@ public class JwtUtil {
         return Jwts.parser().verifyWith(secretKey).build().parseSignedClaims(token).getPayload().get("id", Long.class);
     }
 
-    private String getCategory(String token) {
-        return Jwts.parser().verifyWith(secretKey).build().parseSignedClaims(token).getPayload()
-                .get("category", String.class);
-    }
-
-    private String getRefreshToken(Long id) {
-        return redisService.getRefreshToken(id);
-    }
-
     public void validateToken(String token) {
         try {
             Jwts.parser().verifyWith(secretKey).build().parseSignedClaims(token);
@@ -121,5 +112,14 @@ public class JwtUtil {
         redisService.saveRefreshToken(id, refreshToken);
 
         return refreshToken;
+    }
+
+    private String getCategory(String token) {
+        return Jwts.parser().verifyWith(secretKey).build().parseSignedClaims(token).getPayload()
+                .get("category", String.class);
+    }
+
+    private String getRefreshToken(Long id) {
+        return redisService.getRefreshToken(id);
     }
 }
