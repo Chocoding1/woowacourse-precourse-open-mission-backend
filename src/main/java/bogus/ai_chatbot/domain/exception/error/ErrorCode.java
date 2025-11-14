@@ -14,6 +14,9 @@ public enum ErrorCode {
     LOGIN_FAILED("LOGIN_FAILED", HttpStatus.BAD_REQUEST, "이메일 또는 비밀번호가 일치하지 않습니다."),
     INVALID_LOGIN_FORM("INVALID_LOGIN_FOMR", HttpStatus.BAD_REQUEST, "로그인 정보가 유효하지 않습니다."),
 
+    // CHAT
+    CONVERSATION_NOT_FOUND("CONVERSATION_NOT_FOUND", HttpStatus.BAD_REQUEST, "존재하지 않는 대화입니다."),
+
     // OPEN_AI
     OPENAI_REQUEST_FAILED("OPENAI_REQUEST_FAILED", HttpStatus.INTERNAL_SERVER_ERROR, "OpenAI API 호출 과정 중 오류가 발생했습니다."),
 
@@ -29,6 +32,7 @@ public enum ErrorCode {
     EMAIL_CODE_NULL("EMAIL_CODE_NULL", HttpStatus.BAD_REQUEST, "해당 이메일의 인증 번호가 존재하지 않습니다."),
 
     // REQUEST
+    INVALID_URI("INVALID_URI", HttpStatus.BAD_REQUEST, "잘못된 URI 요청입니다."),
     INVALID_METHOD("INVALID_METHOD", HttpStatus.METHOD_NOT_ALLOWED, "잘못된 요청 메서드입니다.");
 
     private final String code;

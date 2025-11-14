@@ -1,7 +1,17 @@
 package bogus.ai_chatbot.domain.chat.service;
 
+import static bogus.ai_chatbot.domain.chat.entity.field.Role.*;
+import static bogus.ai_chatbot.domain.exception.error.ErrorCode.*;
+
+import bogus.ai_chatbot.domain.chat.entity.Conversation;
+import bogus.ai_chatbot.domain.chat.entity.Message;
+import bogus.ai_chatbot.domain.chat.entity.field.Role;
+import bogus.ai_chatbot.domain.chat.repository.ConversationRepository;
+import bogus.ai_chatbot.domain.chat.repository.MessageRepository;
+import bogus.ai_chatbot.domain.exception.exception.ChatException;
 import bogus.ai_chatbot.domain.openai.dto.OpenAiResponse;
 import bogus.ai_chatbot.domain.openai.service.OpenAiClient;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -10,10 +20,40 @@ import org.springframework.stereotype.Service;
 public class ChatService {
 
     private final OpenAiClient openAiClient;
+    private final ConversationRepository conversationRepository;
+    private final MessageRepository messageRepository;
 
-    public String getResponseMessage(String requestMessage) {
-        OpenAiResponse openAiResponse = openAiClient.getAiResponse(requestMessage);
+    // 새로운 Conversation으로 요청 + 로그인 X
+    public String getResponseMessageWhenGuest(String prompt) {
+        return getResponseMessage(prompt);
+    }
 
+    // 기존 Conversation으로 요청(conversationId 필수)
+    public String getResponseMessageWhenMember(Long conversationId, String prompt) {
+        Conversation conversation = conversationRepository.findById(conversationId)
+                .orElseThrow(() -> new ChatException(CONVERSATION_NOT_FOUND));
+
+        Message requestMessage = createMessage(prompt, conversation, USER);
+
+        String initialResponseMessage = getResponseMessage(prompt);
+
+        Message responseMessage = createMessage(initialResponseMessage, conversation, ASSISTANT);
+
+        messageRepository.saveAll(List.of(requestMessage, responseMessage));
+
+        return initialResponseMessage;
+    }
+
+    private String getResponseMessage(String prompt) {
+        OpenAiResponse openAiResponse = openAiClient.getAiResponse(prompt);
         return openAiResponse.getChoices().getFirst().getMessage().getContent();
+    }
+
+    private static Message createMessage(String prompt, Conversation conversation, Role role) {
+        return Message.builder()
+                .content(prompt)
+                .conversation(conversation)
+                .role(role)
+                .build();
     }
 }

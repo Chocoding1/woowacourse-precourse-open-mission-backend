@@ -10,12 +10,4 @@ public class OpenAiRequest {
 
     private String model;
     private List<OpenAiMessage> messages;
-
-    @Override
-    public String toString() {
-        return "OpenAiRequest{" +
-                "model='" + model + '\'' +
-                ", messages=" + messages +
-                '}';
-    }
 }

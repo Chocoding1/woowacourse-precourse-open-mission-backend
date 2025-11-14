@@ -41,6 +41,13 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         }
 
         String accessHeader = request.getHeader("Authorization");
+
+        if (pathMatcher.match("/chats/**", requestURI) && accessHeader == null) {
+            log.info("chats URI : " + requestURI);
+            filterChain.doFilter(request, response);
+            return;
+        }
+
         if (accessHeader == null || !accessHeader.startsWith("Bearer ")) {
             throw new AuthException(TOKEN_NULL);
         }

@@ -53,6 +53,7 @@ public class SecurityConfig {
 
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers(getPermitPaths(permitPaths)).permitAll()
+                        .requestMatchers("/chats/**").permitAll()
                         .anyRequest().authenticated()
                 )
 
