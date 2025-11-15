@@ -1,18 +1,14 @@
 package bogus.ai_chatbot.domain.chat.controller;
 
-import static bogus.ai_chatbot.domain.exception.error.ErrorCode.INVALID_URI;
+import static bogus.ai_chatbot.domain.common.exception.error.ErrorCode.INVALID_URI;
 
 import bogus.ai_chatbot.domain.chat.dto.ChatRequest;
 import bogus.ai_chatbot.domain.chat.dto.ChatResponse;
 import bogus.ai_chatbot.domain.chat.service.ChatService;
 import bogus.ai_chatbot.domain.chat.service.ConversationService;
-import bogus.ai_chatbot.domain.exception.exception.ChatException;
+import bogus.ai_chatbot.domain.common.exception.exception.ChatException;
 import bogus.ai_chatbot.domain.security.dto.CustomUserDetails;
 import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.Parameter;
-import io.swagger.v3.oas.annotations.enums.ParameterIn;
-import io.swagger.v3.oas.annotations.media.Content;
-import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;

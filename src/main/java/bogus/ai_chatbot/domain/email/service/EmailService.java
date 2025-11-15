@@ -1,11 +1,11 @@
 package bogus.ai_chatbot.domain.email.service;
 
-import static bogus.ai_chatbot.domain.exception.error.ErrorCode.DUPLICATE_EMAIL;
-import static bogus.ai_chatbot.domain.exception.error.ErrorCode.EMAIL_CODE_NULL;
-import static bogus.ai_chatbot.domain.exception.error.ErrorCode.INVALID_EMAIL_CODE;
+import static bogus.ai_chatbot.domain.common.exception.error.ErrorCode.DUPLICATE_EMAIL;
+import static bogus.ai_chatbot.domain.common.exception.error.ErrorCode.EMAIL_CODE_NULL;
+import static bogus.ai_chatbot.domain.common.exception.error.ErrorCode.INVALID_EMAIL_CODE;
 
 import bogus.ai_chatbot.domain.email.dto.EmailDto;
-import bogus.ai_chatbot.domain.exception.exception.BusinessException;
+import bogus.ai_chatbot.domain.common.exception.exception.BusinessException;
 import bogus.ai_chatbot.domain.member.repository.MemberRepository;
 import bogus.ai_chatbot.domain.redis.service.RedisService;
 import jakarta.mail.MessagingException;

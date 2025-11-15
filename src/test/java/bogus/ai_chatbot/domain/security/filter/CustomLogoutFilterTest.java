@@ -1,9 +1,8 @@
 package bogus.ai_chatbot.domain.security.filter;
 
-import static bogus.ai_chatbot.domain.exception.error.ErrorCode.*;
 import static org.mockito.Mockito.*;
 
-import bogus.ai_chatbot.domain.exception.exception.AuthException;
+import bogus.ai_chatbot.domain.common.exception.exception.AuthException;
 import bogus.ai_chatbot.domain.jwt.util.JwtUtil;
 import jakarta.servlet.ServletException;
 import java.io.IOException;

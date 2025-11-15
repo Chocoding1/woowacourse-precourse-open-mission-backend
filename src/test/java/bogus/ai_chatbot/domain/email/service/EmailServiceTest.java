@@ -1,6 +1,5 @@
 package bogus.ai_chatbot.domain.email.service;
 
-import static bogus.ai_chatbot.domain.exception.error.ErrorCode.*;
 import static org.assertj.core.api.Assertions.*;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.ArgumentMatchers.any;
@@ -13,7 +12,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import bogus.ai_chatbot.domain.email.dto.EmailDto;
-import bogus.ai_chatbot.domain.exception.exception.BusinessException;
+import bogus.ai_chatbot.domain.common.exception.exception.BusinessException;
 import bogus.ai_chatbot.domain.member.repository.MemberRepository;
 import bogus.ai_chatbot.domain.redis.service.RedisService;
 import jakarta.mail.MessagingException;

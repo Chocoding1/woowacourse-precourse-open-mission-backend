@@ -1,4 +1,4 @@
-package bogus.ai_chatbot.domain.exception.error;
+package bogus.ai_chatbot.domain.common.exception.error;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

@@ -1,6 +1,6 @@
-package bogus.ai_chatbot.domain.exception.exception;
+package bogus.ai_chatbot.domain.common.exception.exception;
 
-import bogus.ai_chatbot.domain.exception.error.ErrorCode;
+import bogus.ai_chatbot.domain.common.exception.error.ErrorCode;
 
 public class AuthException extends CustomException {
 

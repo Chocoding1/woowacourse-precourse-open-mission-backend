@@ -1,11 +1,11 @@
 package bogus.ai_chatbot.domain.member.service;
 
-import static bogus.ai_chatbot.domain.exception.error.ErrorCode.EMAIL_NOT_VERIFIED;
+import static bogus.ai_chatbot.domain.common.exception.error.ErrorCode.EMAIL_NOT_VERIFIED;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.Mockito.*;
 
 import bogus.ai_chatbot.domain.email.service.EmailService;
-import bogus.ai_chatbot.domain.exception.exception.BusinessException;
+import bogus.ai_chatbot.domain.common.exception.exception.BusinessException;
 import bogus.ai_chatbot.domain.member.entity.Member;
 import bogus.ai_chatbot.domain.member.dto.MemberJoinDto;
 import bogus.ai_chatbot.domain.member.repository.MemberRepository;

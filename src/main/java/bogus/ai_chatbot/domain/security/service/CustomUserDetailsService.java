@@ -1,9 +1,9 @@
 package bogus.ai_chatbot.domain.security.service;
 
-import static bogus.ai_chatbot.domain.exception.error.ErrorCode.MEMBER_NOT_FOUND;
+import static bogus.ai_chatbot.domain.common.exception.error.ErrorCode.MEMBER_NOT_FOUND;
 
 import bogus.ai_chatbot.domain.security.dto.CustomUserDetails;
-import bogus.ai_chatbot.domain.exception.exception.BusinessException;
+import bogus.ai_chatbot.domain.common.exception.exception.BusinessException;
 import bogus.ai_chatbot.domain.member.dto.MemberSessionDto;
 import bogus.ai_chatbot.domain.member.entity.Member;
 import bogus.ai_chatbot.domain.member.repository.MemberRepository;

@@ -1,8 +1,6 @@
 package bogus.ai_chatbot.domain.security.service;
 
-import static bogus.ai_chatbot.domain.exception.error.ErrorCode.*;
-
-import bogus.ai_chatbot.domain.exception.exception.BusinessException;
+import bogus.ai_chatbot.domain.common.exception.exception.BusinessException;
 import bogus.ai_chatbot.domain.member.repository.MemberRepository;
 import java.util.Optional;
 import org.assertj.core.api.Assertions;

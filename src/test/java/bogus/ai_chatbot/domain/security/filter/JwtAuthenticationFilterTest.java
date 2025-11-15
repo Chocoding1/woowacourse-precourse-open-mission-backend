@@ -1,10 +1,8 @@
 package bogus.ai_chatbot.domain.security.filter;
 
-import static bogus.ai_chatbot.domain.exception.error.ErrorCode.*;
 import static org.mockito.Mockito.*;
 
-import bogus.ai_chatbot.domain.exception.error.ErrorCode;
-import bogus.ai_chatbot.domain.exception.exception.AuthException;
+import bogus.ai_chatbot.domain.common.exception.exception.AuthException;
 import bogus.ai_chatbot.domain.jwt.util.JwtUtil;
 import bogus.ai_chatbot.domain.security.properties.PermitPaths;
 import jakarta.servlet.ServletException;
@@ -21,7 +19,6 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.mock.web.MockFilterChain;
 import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.mock.web.MockHttpServletResponse;
-import org.springframework.util.AntPathMatcher;
 
 @ExtendWith(MockitoExtension.class)
 class JwtAuthenticationFilterTest {

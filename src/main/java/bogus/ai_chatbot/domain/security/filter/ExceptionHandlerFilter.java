@@ -1,8 +1,8 @@
 package bogus.ai_chatbot.domain.security.filter;
 
-import bogus.ai_chatbot.domain.exception.error.ErrorCode;
-import bogus.ai_chatbot.domain.exception.error.dto.ErrorResponse;
-import bogus.ai_chatbot.domain.exception.exception.CustomException;
+import bogus.ai_chatbot.domain.common.exception.error.ErrorCode;
+import bogus.ai_chatbot.domain.common.exception.error.dto.ErrorResponse;
+import bogus.ai_chatbot.domain.common.exception.exception.CustomException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;

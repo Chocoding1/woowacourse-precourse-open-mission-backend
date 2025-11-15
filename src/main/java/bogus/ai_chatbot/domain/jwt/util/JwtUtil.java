@@ -1,11 +1,10 @@
 package bogus.ai_chatbot.domain.jwt.util;
 
-import static bogus.ai_chatbot.domain.exception.error.ErrorCode.INVALID_TOKEN;
-import static bogus.ai_chatbot.domain.exception.error.ErrorCode.TOKEN_EXPIRED;
-import static bogus.ai_chatbot.domain.exception.error.ErrorCode.TOKEN_NOT_SAVED;
-import static bogus.ai_chatbot.domain.exception.error.ErrorCode.TOKEN_NULL;
+import static bogus.ai_chatbot.domain.common.exception.error.ErrorCode.INVALID_TOKEN;
+import static bogus.ai_chatbot.domain.common.exception.error.ErrorCode.TOKEN_EXPIRED;
+import static bogus.ai_chatbot.domain.common.exception.error.ErrorCode.TOKEN_NOT_SAVED;
 
-import bogus.ai_chatbot.domain.exception.exception.AuthException;
+import bogus.ai_chatbot.domain.common.exception.exception.AuthException;
 import bogus.ai_chatbot.domain.jwt.dto.JwtInfoDto;
 import bogus.ai_chatbot.domain.redis.service.RedisService;
 import io.jsonwebtoken.ExpiredJwtException;

@@ -1,13 +1,12 @@
 package bogus.ai_chatbot.domain.chat.service;
 
-import static bogus.ai_chatbot.domain.exception.error.ErrorCode.*;
 import static org.mockito.Mockito.*;
 
 import bogus.ai_chatbot.domain.chat.entity.Conversation;
 import bogus.ai_chatbot.domain.chat.entity.Message;
 import bogus.ai_chatbot.domain.chat.repository.ConversationRepository;
 import bogus.ai_chatbot.domain.chat.repository.MessageRepository;
-import bogus.ai_chatbot.domain.exception.exception.ChatException;
+import bogus.ai_chatbot.domain.common.exception.exception.ChatException;
 import bogus.ai_chatbot.domain.openai.dto.OpenAiMessage;
 import bogus.ai_chatbot.domain.openai.dto.OpenAiResponse;
 import bogus.ai_chatbot.domain.openai.dto.OpenAiResponse.Choice;

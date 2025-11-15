@@ -1,8 +1,8 @@
 package bogus.ai_chatbot.domain.jwt.service;
 
-import static bogus.ai_chatbot.domain.exception.error.ErrorCode.TOKEN_NULL;
+import static bogus.ai_chatbot.domain.common.exception.error.ErrorCode.TOKEN_NULL;
 
-import bogus.ai_chatbot.domain.exception.exception.AuthException;
+import bogus.ai_chatbot.domain.common.exception.exception.AuthException;
 import bogus.ai_chatbot.domain.jwt.dto.JwtInfoDto;
 import bogus.ai_chatbot.domain.jwt.util.JwtUtil;
 import lombok.RequiredArgsConstructor;

@@ -1,9 +1,9 @@
-package bogus.ai_chatbot.domain.exception.handler;
+package bogus.ai_chatbot.domain.common.exception.handler;
 
-import bogus.ai_chatbot.domain.exception.error.ErrorCode;
-import bogus.ai_chatbot.domain.exception.error.dto.ErrorResponse;
-import bogus.ai_chatbot.domain.exception.exception.ChatException;
-import bogus.ai_chatbot.domain.exception.exception.CustomException;
+import bogus.ai_chatbot.domain.common.exception.error.ErrorCode;
+import bogus.ai_chatbot.domain.common.exception.error.dto.ErrorResponse;
+import bogus.ai_chatbot.domain.common.exception.exception.ChatException;
+import bogus.ai_chatbot.domain.common.exception.exception.CustomException;
 import java.util.HashMap;
 import java.util.Map;
 import lombok.extern.slf4j.Slf4j;

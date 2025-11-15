@@ -1,4 +1,4 @@
-package bogus.ai_chatbot.domain.exception.error.dto;
+package bogus.ai_chatbot.domain.common.exception.error.dto;
 
 import java.util.Map;
 import lombok.Builder;

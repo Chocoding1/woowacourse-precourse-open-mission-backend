@@ -1,10 +1,9 @@
 package bogus.ai_chatbot.domain.openai.service;
 
-import static bogus.ai_chatbot.domain.exception.error.ErrorCode.*;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.*;
 
-import bogus.ai_chatbot.domain.exception.exception.BusinessException;
+import bogus.ai_chatbot.domain.common.exception.exception.BusinessException;
 import bogus.ai_chatbot.domain.openai.dto.OpenAiRequest;
 import bogus.ai_chatbot.domain.openai.dto.OpenAiResponse;
 import org.assertj.core.api.Assertions;
