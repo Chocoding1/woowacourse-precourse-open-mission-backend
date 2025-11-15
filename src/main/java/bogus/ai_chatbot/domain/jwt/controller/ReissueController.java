@@ -1,5 +1,6 @@
 package bogus.ai_chatbot.domain.jwt.controller;
 
+import bogus.ai_chatbot.domain.common.api.dto.CustomApiResponse;
 import bogus.ai_chatbot.domain.jwt.dto.JwtInfoDto;
 import bogus.ai_chatbot.domain.jwt.service.ReissueService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -28,7 +29,7 @@ public class ReissueController {
             @ApiResponse(responseCode = "401", description = "인증 실패(토큰 없음 / 토큰 만료 / 유효하지 않은 토큰 / 저장되지 않은 토큰)")
     })
     @PostMapping("/reissue")
-    public ResponseEntity<String> reissue(HttpServletRequest request, HttpServletResponse response) {
+    public ResponseEntity<CustomApiResponse<String>> reissue(HttpServletRequest request, HttpServletResponse response) {
         String refreshToken = request.getHeader("Authorization-Refresh");
 
         JwtInfoDto jwtInfoDto = reissueService.reissueToken(refreshToken);
@@ -36,6 +37,6 @@ public class ReissueController {
         response.setHeader("Authorization", "Bearer " + jwtInfoDto.getAccessToken());
         response.setHeader("Authorization-Refresh", jwtInfoDto.getRefreshToken());
 
-        return ResponseEntity.ok("토큰 재발급 완료");
+        return ResponseEntity.ok(CustomApiResponse.from("토큰 재발급 완료"));
     }
 }

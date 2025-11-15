@@ -6,9 +6,12 @@ import bogus.ai_chatbot.domain.chat.dto.ChatRequest;
 import bogus.ai_chatbot.domain.chat.dto.ChatResponse;
 import bogus.ai_chatbot.domain.chat.service.ChatService;
 import bogus.ai_chatbot.domain.chat.service.ConversationService;
+import bogus.ai_chatbot.domain.common.api.dto.CustomApiResponse;
 import bogus.ai_chatbot.domain.common.exception.exception.ChatException;
 import bogus.ai_chatbot.domain.security.dto.CustomUserDetails;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.enums.ParameterIn;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -38,15 +41,15 @@ public class ChatController {
             @ApiResponse(responseCode = "500", description = "OpenAI 내부 오류")
     })
     @PostMapping
-    public ResponseEntity<ChatResponse> chatInNewConversation(@RequestBody ChatRequest chatRequest,
-                                                              @AuthenticationPrincipal CustomUserDetails customUserDetails) {
+    public ResponseEntity<CustomApiResponse<ChatResponse>> chatInNewConversation(@RequestBody ChatRequest chatRequest,
+                                                                                 @AuthenticationPrincipal CustomUserDetails customUserDetails) {
         log.info("newChat");
 
         if (customUserDetails == null) {
             // 로그인을 안 한 경우 : 단순 message만으로 api 요청 후 응답
             String responseMessage = chatService.getResponseMessageWhenGuest(chatRequest.getPrompt());
 
-            return ResponseEntity.ok(ChatResponse.from(responseMessage));
+            return ResponseEntity.ok(CustomApiResponse.of("AI 응답 완료", ChatResponse.from(responseMessage)));
         }
 
         // 로그인을 한 경우 + 새 채팅 : memberId 가져가서 conversation 저장하고, api 요청 후 응답과 함께 conversationId로 redirect 요청
@@ -55,18 +58,15 @@ public class ChatController {
 
         String responseMessage = chatService.getResponseMessageWhenMember(conversationId, chatRequest.getPrompt());
 
-        return ResponseEntity.ok(ChatResponse.of(responseMessage, "/chats/" + conversationId));
+        return ResponseEntity.ok(
+                CustomApiResponse.of("AI 응답 완료", ChatResponse.of(responseMessage, "/chats/" + conversationId)));
     }
 
-    @Operation(summary = "기존 대화방에서 prompt 작성", description = "prompt를 전송하면 응답 반환"
-//            parameters = {
-//                    @Parameter(
-//                            name = "conversationId",
-//                            description = "대화방 ID",
-//                            required = true,
-//                            in = ParameterIn.PATH
-//                    )
-//            }
+    @Operation(summary = "기존 대화방에서 prompt 작성", description = "prompt를 전송하면 응답 반환",
+            parameters = {
+                    @Parameter(name = "conversationId", description = "대화방 ID",
+                            required = true, in = ParameterIn.PATH)
+            }
     )
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "AI 응답 성공"),
@@ -75,9 +75,9 @@ public class ChatController {
             @ApiResponse(responseCode = "500", description = "OpenAI 내부 오류")
     })
     @PostMapping("/{conversationId}")
-    public ResponseEntity<ChatResponse> chatInOldConversation(@PathVariable Long conversationId,
-                                                              @RequestBody ChatRequest chatRequest,
-                                                              @AuthenticationPrincipal CustomUserDetails customUserDetails) {
+    public ResponseEntity<CustomApiResponse<ChatResponse>> chatInOldConversation(@PathVariable Long conversationId,
+                                                                                 @RequestBody ChatRequest chatRequest,
+                                                                                 @AuthenticationPrincipal CustomUserDetails customUserDetails) {
         log.info("oldChat");
 
         if (customUserDetails == null) {
@@ -88,6 +88,6 @@ public class ChatController {
         //로그인 한 경우 : conversationId 가져가서 api 요청, 응답하고 각 메시지 저장(memberId는 필요 X)
         String responseMessage = chatService.getResponseMessageWhenMember(conversationId, chatRequest.getPrompt());
 
-        return ResponseEntity.ok(ChatResponse.from(responseMessage));
+        return ResponseEntity.ok(CustomApiResponse.of("AI 응답 완료", ChatResponse.from(responseMessage)));
     }
 }

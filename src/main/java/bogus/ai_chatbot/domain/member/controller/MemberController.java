@@ -1,5 +1,6 @@
 package bogus.ai_chatbot.domain.member.controller;
 
+import bogus.ai_chatbot.domain.common.api.dto.CustomApiResponse;
 import bogus.ai_chatbot.domain.member.dto.MemberJoinDto;
 import bogus.ai_chatbot.domain.member.service.MemberService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -28,9 +29,9 @@ public class MemberController {
             @ApiResponse(responseCode = "400", description = "이메일 인증 미완료")
     })
     @PostMapping
-    public ResponseEntity<String> joinMember(@Validated @RequestBody MemberJoinDto memberJoinDto) {
+    public ResponseEntity<CustomApiResponse<String>> joinMember(@Validated @RequestBody MemberJoinDto memberJoinDto) {
         memberService.join(memberJoinDto);
 
-        return ResponseEntity.status(201).body("회원가입 성공");
+        return ResponseEntity.status(201).body(CustomApiResponse.from("회원가입 성공"));
     }
 }
