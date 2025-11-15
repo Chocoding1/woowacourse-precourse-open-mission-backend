@@ -28,6 +28,7 @@ public class EmailService {
 
     public void sendAuthCode(EmailDto emailDto) throws MessagingException {
         String email = emailDto.getEmail();
+        System.out.println(email);
 
         validateDuplicateEmail(email);
 
