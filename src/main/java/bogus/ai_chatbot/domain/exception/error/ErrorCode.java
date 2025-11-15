@@ -15,7 +15,7 @@ public enum ErrorCode {
     INVALID_LOGIN_FORM("INVALID_LOGIN_FOMR", HttpStatus.BAD_REQUEST, "로그인 정보가 유효하지 않습니다."),
 
     // CHAT
-    CONVERSATION_NOT_FOUND("CONVERSATION_NOT_FOUND", HttpStatus.BAD_REQUEST, "존재하지 않는 대화입니다."),
+    CONVERSATION_NOT_FOUND("CONVERSATION_NOT_FOUND", HttpStatus.NOT_FOUND, "존재하지 않는 대화입니다."),
 
     // OPEN_AI
     OPENAI_REQUEST_FAILED("OPENAI_REQUEST_FAILED", HttpStatus.INTERNAL_SERVER_ERROR, "OpenAI API 호출 과정 중 오류가 발생했습니다."),
@@ -29,7 +29,7 @@ public enum ErrorCode {
     // EMAIL
     DUPLICATE_EMAIL("DUPLICATE_EMAIL", HttpStatus.CONFLICT, "이미 가입된 이메일입니다."),
     INVALID_EMAIL_CODE("INVALID_EMAIL_CODE", HttpStatus.BAD_REQUEST, "이메일 인증 코드가 일치하지 않습니다."),
-    EMAIL_CODE_NULL("EMAIL_CODE_NULL", HttpStatus.BAD_REQUEST, "해당 이메일의 인증 번호가 존재하지 않습니다."),
+    EMAIL_CODE_NULL("EMAIL_CODE_NULL", HttpStatus.NOT_FOUND, "해당 이메일의 인증 코드가 존재하지 않습니다."),
 
     // REQUEST
     INVALID_URI("INVALID_URI", HttpStatus.BAD_REQUEST, "잘못된 URI 요청입니다."),
