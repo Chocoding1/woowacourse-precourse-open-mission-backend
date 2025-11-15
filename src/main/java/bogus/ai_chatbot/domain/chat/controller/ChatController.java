@@ -8,6 +8,13 @@ import bogus.ai_chatbot.domain.chat.service.ChatService;
 import bogus.ai_chatbot.domain.chat.service.ConversationService;
 import bogus.ai_chatbot.domain.exception.exception.ChatException;
 import bogus.ai_chatbot.domain.security.dto.CustomUserDetails;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.enums.ParameterIn;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
@@ -18,6 +25,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+@Tag(name = "Chat API", description = "채팅 관련 API")
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/chats")
@@ -27,6 +35,13 @@ public class ChatController {
     private final ChatService chatService;
     private final ConversationService conversationService;
 
+    @Operation(summary = "새로운 대화방에서 prompt 작성", description = "prompt를 전송하면 새로운 대화방 만들어서 응답 반환 + 새로운 대화방 URI로 redirect 요청",
+            responses = {
+                    @ApiResponse(responseCode = "200", description = "AI 응답 성공",
+                            content = @Content(schema = @Schema(implementation = ChatResponse.class))
+                    ),
+                    @ApiResponse(responseCode = "500", description = "OpenAI 내부 오류")
+            })
     @PostMapping
     public ResponseEntity<ChatResponse> chatInNewConversation(@RequestBody ChatRequest chatRequest,
                                                               @AuthenticationPrincipal CustomUserDetails customUserDetails) {
@@ -48,6 +63,24 @@ public class ChatController {
         return ResponseEntity.ok(ChatResponse.of(responseMessage, "/chats/" + conversationId));
     }
 
+    @Operation(summary = "기존 대화방에서 prompt 작성", description = "prompt를 전송하면 응답 반환",
+            parameters = {
+                    @Parameter(
+                            name = "conversationId",
+                            description = "대화방 ID",
+                            required = true,
+                            in = ParameterIn.PATH
+                    )
+            },
+            responses = {
+                    @ApiResponse(responseCode = "200", description = "AI 응답 성공",
+                            content = @Content(schema = @Schema(implementation = ChatResponse.class))
+                    ),
+                    @ApiResponse(responseCode = "400", description = "로그인하지 않은 유저가 대화방 접근"),
+                    @ApiResponse(responseCode = "404", description = "존재하지 않는 대화방 접근"),
+                    @ApiResponse(responseCode = "500", description = "OpenAI 내부 오류")
+            }
+    )
     @PostMapping("/{conversationId}")
     public ResponseEntity<ChatResponse> chatInOldConversation(@PathVariable Long conversationId,
                                                               @RequestBody ChatRequest chatRequest,
