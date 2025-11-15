@@ -79,7 +79,7 @@ public class EmailService {
         MimeMessageHelper helper = new MimeMessageHelper(message, true, "UTF-8");
 
         helper.setTo(email);
-        helper.setSubject("AI ChatBot 인증 코드");
+        helper.setSubject("AI ChatBot 인증코드");
 
         String htmlContent = "<html><body>" +
                 "<h3>AI ChatBot 인증 코드</h3>" +

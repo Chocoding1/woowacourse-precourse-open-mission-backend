@@ -28,8 +28,8 @@ public enum ErrorCode {
 
     // EMAIL
     DUPLICATE_EMAIL("DUPLICATE_EMAIL", HttpStatus.CONFLICT, "이미 가입된 이메일입니다."),
-    INVALID_EMAIL_CODE("INVALID_EMAIL_CODE", HttpStatus.BAD_REQUEST, "이메일 인증 코드가 일치하지 않습니다."),
-    EMAIL_CODE_NULL("EMAIL_CODE_NULL", HttpStatus.NOT_FOUND, "해당 이메일의 인증 코드가 존재하지 않습니다."),
+    INVALID_EMAIL_CODE("INVALID_EMAIL_CODE", HttpStatus.BAD_REQUEST, "이메일 인증코드가 일치하지 않습니다."),
+    EMAIL_CODE_NULL("EMAIL_CODE_NULL", HttpStatus.NOT_FOUND, "해당 이메일의 인증코드가 존재하지 않습니다."),
 
     // REQUEST
     INVALID_URI("INVALID_URI", HttpStatus.BAD_REQUEST, "잘못된 URI 요청입니다."),
