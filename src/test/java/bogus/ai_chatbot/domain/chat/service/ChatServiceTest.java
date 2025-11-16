@@ -38,7 +38,7 @@ class ChatServiceTest {
     MessageRepository messageRepository;
 
     @Test
-    @DisplayName("기존 대화방에 메시지 전송 및 응답 성공 테스트")
+    @DisplayName("기존 채팅방에 메시지 전송 및 응답 성공 테스트")
     void getResponseMessageWhenMember_success() {
         //given
         Long conversationId = 1L;
@@ -63,7 +63,7 @@ class ChatServiceTest {
     }
 
     @Test
-    @DisplayName("기존 대화방에 메시지 전송 시 대화방이 존재하지 않으면 예외 발생")
+    @DisplayName("기존 채팅방에 메시지 전송 시 대화방이 존재하지 않으면 예외 발생")
     void testMethod() {
         //given
         Long conversationId = 1L;

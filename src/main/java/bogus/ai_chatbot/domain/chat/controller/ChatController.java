@@ -37,6 +37,11 @@ public class ChatController {
     private final ChatService chatService;
     private final ConversationService conversationService;
 
+    @Operation(summary = "로그인한 사용자의 채팅방 목록 반환", description = "로그인한 사용자의 채팅방 목록(id, title) 반환")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "AI 응답 성공"),
+            @ApiResponse(responseCode = "404", description = "존재하지 않는 회원")
+    })
     @GetMapping("/conversations")
     public ResponseEntity<CustomApiResponse<ConversationsDto>> getConversations(
             @AuthenticationPrincipal CustomUserDetails customUserDetails) {
@@ -47,9 +52,10 @@ public class ChatController {
         return ResponseEntity.ok(CustomApiResponse.of("채팅방 목록 조회 성공", conversationsDto));
     }
 
-    @Operation(summary = "새로운 대화방에서 prompt 작성", description = "prompt를 전송하면 새로운 대화방 만들어서 응답 반환 + 새로운 대화방 URI로 redirect 요청")
+    @Operation(summary = "새로운 채팅방에서 prompt 작성", description = "prompt를 전송하면 새로운 채팅방 만들어서 응답 반환 + 새로운 채팅방 URI로 redirect 요청")
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "AI 응답 성공"),
+            @ApiResponse(responseCode = "404", description = "존재하지 않는 회원 / 존재하지 않는 채팅방"),
             @ApiResponse(responseCode = "500", description = "OpenAI 내부 오류")
     })
     @PostMapping
@@ -74,16 +80,16 @@ public class ChatController {
                 CustomApiResponse.of("AI 응답 완료", ChatResponse.of(responseMessage, "/chats/" + conversationId)));
     }
 
-    @Operation(summary = "기존 대화방에서 prompt 작성", description = "prompt를 전송하면 응답 반환",
+    @Operation(summary = "기존 채팅방에서 prompt 작성", description = "prompt를 전송하면 응답 반환",
             parameters = {
-                    @Parameter(name = "conversationId", description = "대화방 ID",
+                    @Parameter(name = "conversationId", description = "채팅방 ID",
                             required = true, in = ParameterIn.PATH)
             }
     )
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "AI 응답 성공"),
-            @ApiResponse(responseCode = "400", description = "로그인하지 않은 유저가 대화방 접근"),
-            @ApiResponse(responseCode = "404", description = "존재하지 않는 대화방 접근"),
+            @ApiResponse(responseCode = "400", description = "로그인하지 않은 유저가 채팅방 접근"),
+            @ApiResponse(responseCode = "404", description = "존재하지 않는 채팅방 접근"),
             @ApiResponse(responseCode = "500", description = "OpenAI 내부 오류")
     })
     @PostMapping("/{conversationId}")
