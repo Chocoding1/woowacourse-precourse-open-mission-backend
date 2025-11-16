@@ -1,5 +1,6 @@
 package bogus.ai_chatbot.domain.openai.service;
 
+import static bogus.ai_chatbot.domain.common.exception.error.ErrorCode.OPENAI_REQUEST_FAILED;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.*;
 

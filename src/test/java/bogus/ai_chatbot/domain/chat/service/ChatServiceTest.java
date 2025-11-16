@@ -1,5 +1,6 @@
 package bogus.ai_chatbot.domain.chat.service;
 
+import static bogus.ai_chatbot.domain.common.exception.error.ErrorCode.CONVERSATION_NOT_FOUND;
 import static org.mockito.Mockito.*;
 
 import bogus.ai_chatbot.domain.chat.entity.Conversation;

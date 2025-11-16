@@ -1,5 +1,7 @@
 package bogus.ai_chatbot.domain.security.service;
 
+import static bogus.ai_chatbot.domain.common.exception.error.ErrorCode.MEMBER_NOT_FOUND;
+
 import bogus.ai_chatbot.domain.common.exception.exception.BusinessException;
 import bogus.ai_chatbot.domain.member.repository.MemberRepository;
 import java.util.Optional;

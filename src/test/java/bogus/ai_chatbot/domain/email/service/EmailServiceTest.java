@@ -1,5 +1,8 @@
 package bogus.ai_chatbot.domain.email.service;
 
+import static bogus.ai_chatbot.domain.common.exception.error.ErrorCode.DUPLICATE_EMAIL;
+import static bogus.ai_chatbot.domain.common.exception.error.ErrorCode.EMAIL_CODE_NULL;
+import static bogus.ai_chatbot.domain.common.exception.error.ErrorCode.INVALID_EMAIL_CODE;
 import static org.assertj.core.api.Assertions.*;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.ArgumentMatchers.any;

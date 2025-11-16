@@ -4,6 +4,7 @@ import static bogus.ai_chatbot.domain.common.exception.error.ErrorCode.INVALID_U
 
 import bogus.ai_chatbot.domain.chat.dto.ChatRequest;
 import bogus.ai_chatbot.domain.chat.dto.ChatResponse;
+import bogus.ai_chatbot.domain.chat.dto.ConversationsDto;
 import bogus.ai_chatbot.domain.chat.service.ChatService;
 import bogus.ai_chatbot.domain.chat.service.ConversationService;
 import bogus.ai_chatbot.domain.common.api.dto.CustomApiResponse;
@@ -19,6 +20,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -34,6 +36,16 @@ public class ChatController {
 
     private final ChatService chatService;
     private final ConversationService conversationService;
+
+    @GetMapping("/conversations")
+    public ResponseEntity<CustomApiResponse<ConversationsDto>> getConversations(
+            @AuthenticationPrincipal CustomUserDetails customUserDetails) {
+        Long memberId = customUserDetails.getId();
+
+        ConversationsDto conversationsDto = conversationService.getConversations(memberId);
+
+        return ResponseEntity.ok(CustomApiResponse.of("채팅방 목록 조회 성공", conversationsDto));
+    }
 
     @Operation(summary = "새로운 대화방에서 prompt 작성", description = "prompt를 전송하면 새로운 대화방 만들어서 응답 반환 + 새로운 대화방 URI로 redirect 요청")
     @ApiResponses({
