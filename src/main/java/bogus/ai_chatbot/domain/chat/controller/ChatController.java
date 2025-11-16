@@ -37,7 +37,7 @@ public class ChatController {
     private final ChatService chatService;
     private final ConversationService conversationService;
 
-    @Operation(summary = "로그인한 사용자의 채팅방 목록 반환", description = "로그인한 사용자의 채팅방 목록(id, title) 반환")
+    @Operation(summary = "로그인한 사용자의 채팅방 목록 반환", description = "로그인한 사용자의 채팅방 목록(id, title) 마지막 수정 날짜 기준 내림차순으로 반환")
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "AI 응답 성공"),
             @ApiResponse(responseCode = "404", description = "존재하지 않는 회원")
