@@ -22,12 +22,12 @@ public class ConversationService {
     private final ConversationRepository conversationRepository;
     private final MemberRepository memberRepository;
 
-    public Long addConversation(Long memberId) {
+    public Long addConversation(Long memberId, String prompt) {
         Member member = memberRepository.findById(memberId)
                 .orElseThrow(() -> new ChatException(MEMBER_NOT_FOUND));
 
         Conversation conversation = Conversation.builder()
-                .title("tempTitle")
+                .title(prompt)
                 .member(member)
                 .build();
 

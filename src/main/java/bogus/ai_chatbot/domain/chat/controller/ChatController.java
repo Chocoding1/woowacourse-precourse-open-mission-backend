@@ -66,7 +66,7 @@ public class ChatController {
 
         // 로그인을 한 경우 + 새 채팅 : memberId 가져가서 conversation 저장하고, api 요청 후 응답과 함께 conversationId로 redirect 요청
         Long memberId = customUserDetails.getId();
-        Long conversationId = conversationService.addConversation(memberId);
+        Long conversationId = conversationService.addConversation(memberId, chatRequest.getPrompt());
 
         String responseMessage = chatService.getResponseMessageWhenMember(conversationId, chatRequest.getPrompt());
 

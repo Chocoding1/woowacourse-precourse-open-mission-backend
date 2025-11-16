@@ -37,6 +37,7 @@ class ConversationServiceTest {
     void addConversation_success() {
         //given
         Long memberId = 1L;
+        String prompt = "prompt";
         Member member = Member.builder()
                 .id(memberId)
                 .build();
@@ -44,7 +45,7 @@ class ConversationServiceTest {
         when(memberRepository.findById(anyLong())).thenReturn(Optional.of(member));
 
         //when
-        conversationService.addConversation(memberId);
+        conversationService.addConversation(memberId, prompt);
 
         //then
         Mockito.verify(conversationRepository, timeout(1)).save(any(Conversation.class));
@@ -55,11 +56,12 @@ class ConversationServiceTest {
     void addConversation_fail_when_member_not_found() {
         //given
         Long memberId = 1L;
+        String prompt = "prompt";
 
         when(memberRepository.findById(anyLong())).thenReturn(Optional.empty());
 
         //when & then
-        assertThatThrownBy(() -> conversationService.addConversation(memberId))
+        assertThatThrownBy(() -> conversationService.addConversation(memberId, prompt))
                 .isInstanceOf(ChatException.class)
                 .hasMessage(MEMBER_NOT_FOUND.getMessage());
 
