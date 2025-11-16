@@ -37,5 +37,5 @@ public class Message {
     private String content;
 
     @CreatedDate
-    private LocalDateTime createdDateTime;
+    private LocalDateTime createdAt;
 }

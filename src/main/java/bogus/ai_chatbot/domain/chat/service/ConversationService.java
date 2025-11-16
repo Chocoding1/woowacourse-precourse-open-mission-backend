@@ -40,7 +40,7 @@ public class ConversationService {
         Member member = memberRepository.findById(memberId)
                 .orElseThrow(() -> new ChatException(MEMBER_NOT_FOUND));
 
-        List<ConversationDto> conversationDtos = conversationRepository.findByMember(member).stream()
+        List<ConversationDto> conversationDtos = conversationRepository.findByMemberOrderByModifiedAtDesc(member).stream()
                 .map(conversation -> new ConversationDto((conversation.getId()), conversation.getTitle()))
                 .toList();
 

@@ -38,8 +38,8 @@ public class Conversation {
     private Member member;
 
     @CreatedDate
-    private LocalDateTime createdDateTime;
+    private LocalDateTime createdAt;
 
     @LastModifiedDate
-    private LocalDateTime lastModifiedDateTime;
+    private LocalDateTime modifiedAt;
 }

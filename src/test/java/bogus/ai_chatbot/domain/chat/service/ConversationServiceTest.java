@@ -80,7 +80,7 @@ class ConversationServiceTest {
         List<Conversation> conversations = List.of(conversation100, conversation200);
 
         when(memberRepository.findById(anyLong())).thenReturn(Optional.of(member));
-        when(conversationRepository.findByMember(any(Member.class))).thenReturn(conversations);
+        when(conversationRepository.findByMemberOrderByModifiedAtDesc(any(Member.class))).thenReturn(conversations);
 
         //when
         ConversationsDto conversationsDto = conversationService.getConversations(memberId);
@@ -102,6 +102,6 @@ class ConversationServiceTest {
                 .isInstanceOf(ChatException.class)
                 .hasMessage(MEMBER_NOT_FOUND.getMessage());
 
-        verify(conversationRepository, never()).findByMember(any(Member.class));
+        verify(conversationRepository, never()).findByMemberOrderByModifiedAtDesc(any(Member.class));
     }
 }
