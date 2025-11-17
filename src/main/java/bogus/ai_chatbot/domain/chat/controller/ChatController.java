@@ -77,7 +77,7 @@ public class ChatController {
         String responseMessage = chatService.getResponseMessageWhenMember(conversationId, chatRequest.getPrompt());
 
         return ResponseEntity.ok(
-                CustomApiResponse.of("AI 응답 완료", ChatResponse.of(responseMessage, "/chats/" + conversationId)));
+                CustomApiResponse.of("AI 응답 완료", ChatResponse.of(responseMessage, conversationId)));
     }
 
     @Operation(summary = "기존 채팅방에서 prompt 작성", description = "prompt를 전송하면 응답 반환",
