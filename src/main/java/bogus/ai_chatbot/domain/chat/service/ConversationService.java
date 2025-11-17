@@ -9,10 +9,10 @@ import bogus.ai_chatbot.domain.chat.repository.ConversationRepository;
 import bogus.ai_chatbot.domain.common.exception.exception.ChatException;
 import bogus.ai_chatbot.domain.member.entity.Member;
 import bogus.ai_chatbot.domain.member.repository.MemberRepository;
-import jakarta.transaction.Transactional;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @Transactional

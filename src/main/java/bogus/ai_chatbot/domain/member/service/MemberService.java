@@ -6,10 +6,10 @@ import bogus.ai_chatbot.domain.email.service.EmailService;
 import bogus.ai_chatbot.domain.common.exception.exception.BusinessException;
 import bogus.ai_chatbot.domain.member.dto.MemberJoinDto;
 import bogus.ai_chatbot.domain.member.repository.MemberRepository;
-import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
