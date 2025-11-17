@@ -15,7 +15,7 @@ public enum ErrorCode {
     INVALID_LOGIN_FORM("INVALID_LOGIN_FOMR", HttpStatus.BAD_REQUEST, "로그인 정보가 유효하지 않습니다."),
 
     // CHAT
-    CONVERSATION_NOT_FOUND("CONVERSATION_NOT_FOUND", HttpStatus.NOT_FOUND, "존재하지 않는 대화입니다."),
+    CONVERSATION_NOT_FOUND("CONVERSATION_NOT_FOUND", HttpStatus.NOT_FOUND, "존재하지 않는 채팅방입니다."),
 
     // OPEN_AI
     OPENAI_REQUEST_FAILED("OPENAI_REQUEST_FAILED", HttpStatus.INTERNAL_SERVER_ERROR, "OpenAI API 호출 과정 중 오류가 발생했습니다."),

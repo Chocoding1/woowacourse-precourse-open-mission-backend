@@ -13,8 +13,6 @@ import bogus.ai_chatbot.domain.common.api.dto.CustomApiResponse;
 import bogus.ai_chatbot.domain.common.exception.exception.ChatException;
 import bogus.ai_chatbot.domain.security.dto.CustomUserDetails;
 import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.Parameter;
-import io.swagger.v3.oas.annotations.enums.ParameterIn;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -42,7 +40,7 @@ public class ChatController {
 
     @Operation(summary = "로그인한 사용자의 채팅방 목록 반환", description = "로그인한 사용자의 채팅방 목록(id, title) 마지막 수정 날짜 기준 내림차순으로 반환")
     @ApiResponses({
-            @ApiResponse(responseCode = "200", description = "AI 응답 성공"),
+            @ApiResponse(responseCode = "200", description = "채팅방 목록 조회 성공"),
             @ApiResponse(responseCode = "404", description = "존재하지 않는 회원")
     })
     @GetMapping("/conversations")
@@ -55,6 +53,11 @@ public class ChatController {
         return ResponseEntity.ok(CustomApiResponse.of("채팅방 목록 조회 성공", conversationsDto));
     }
 
+    @Operation(summary = "특정 채팅방의 대화 내용 조회", description = "채팅방 ID를 파라미터로 넘기면, 해당 채팅방의 대화 내용 조회")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "대화 내용 조회 성공"),
+            @ApiResponse(responseCode = "404", description = "존재하지 않는 채팅방")
+    })
     @GetMapping("/conversations/{conversationId}")
     public ResponseEntity<CustomApiResponse<MessagesDto>> getMessages(
             @PathVariable Long conversationId) {
@@ -65,7 +68,7 @@ public class ChatController {
 
     @Operation(summary = "새로운 채팅방에서 prompt 작성", description = "prompt를 전송하면 새로운 채팅방 만들어서 응답 반환 + 새로운 채팅방 URI로 redirect 요청")
     @ApiResponses({
-            @ApiResponse(responseCode = "200", description = "AI 응답 성공"),
+            @ApiResponse(responseCode = "200", description = "AI 응답 완료"),
             @ApiResponse(responseCode = "404", description = "존재하지 않는 회원 / 존재하지 않는 채팅방"),
             @ApiResponse(responseCode = "500", description = "OpenAI 내부 오류")
     })
@@ -91,14 +94,9 @@ public class ChatController {
                 CustomApiResponse.of("AI 응답 완료", ChatResponse.of(responseMessage, conversationId)));
     }
 
-    @Operation(summary = "기존 채팅방에서 prompt 작성", description = "prompt를 전송하면 응답 반환",
-            parameters = {
-                    @Parameter(name = "conversationId", description = "채팅방 ID",
-                            required = true, in = ParameterIn.PATH)
-            }
-    )
+    @Operation(summary = "기존 채팅방에서 prompt 작성", description = "prompt를 전송하면 응답 반환")
     @ApiResponses({
-            @ApiResponse(responseCode = "200", description = "AI 응답 성공"),
+            @ApiResponse(responseCode = "200", description = "AI 응답 완료"),
             @ApiResponse(responseCode = "400", description = "로그인하지 않은 유저가 채팅방 접근"),
             @ApiResponse(responseCode = "404", description = "존재하지 않는 채팅방 접근"),
             @ApiResponse(responseCode = "500", description = "OpenAI 내부 오류")
