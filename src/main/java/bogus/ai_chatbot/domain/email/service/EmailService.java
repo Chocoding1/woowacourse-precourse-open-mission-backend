@@ -84,7 +84,7 @@ public class EmailService {
 
         String htmlContent = "<html><body>" +
                 "<h3>AI ChatBot 인증 코드</h3>" +
-                "<p><strong>" + code + "</strong></p>" +
+                "<h3><strong>" + code + "</strong></h3>" +
                 "</body></html>";
 
         helper.setText(htmlContent, true);
