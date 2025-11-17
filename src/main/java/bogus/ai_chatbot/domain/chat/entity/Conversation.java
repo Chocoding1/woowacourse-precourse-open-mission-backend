@@ -42,4 +42,8 @@ public class Conversation {
 
     @LastModifiedDate
     private LocalDateTime modifiedAt;
+
+    public void updateModifiedAt(LocalDateTime modifiedAt) {
+        this.modifiedAt = modifiedAt;
+    }
 }

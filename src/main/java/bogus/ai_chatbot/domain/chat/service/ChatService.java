@@ -14,9 +14,11 @@ import bogus.ai_chatbot.domain.openai.service.OpenAiClient;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
+@Transactional(readOnly = true)
 public class ChatService {
 
     private final OpenAiClient openAiClient;
@@ -29,6 +31,7 @@ public class ChatService {
     }
 
     // 기존 Conversation으로 요청(conversationId 필수)
+    @Transactional
     public String getResponseMessageWhenMember(Long conversationId, String prompt) {
         Conversation conversation = conversationRepository.findById(conversationId)
                 .orElseThrow(() -> new ChatException(CONVERSATION_NOT_FOUND));
@@ -40,6 +43,8 @@ public class ChatService {
         Message responseMessage = createMessage(initialResponseMessage, conversation, ASSISTANT);
 
         messageRepository.saveAll(List.of(requestMessage, responseMessage));
+
+        conversation.updateModifiedAt(responseMessage.getCreatedAt());
 
         return initialResponseMessage;
     }
