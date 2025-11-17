@@ -27,6 +27,9 @@ public class CustomLogoutFilter extends GenericFilterBean {
             throws IOException, ServletException {
         log.info("CustomLogoutFilter -> doFilter");
 
+        HttpServletRequest request = (HttpServletRequest) servletRequest;
+        log.info("requestURI : " + request.getRequestURI());
+
         doFilter((HttpServletRequest) servletRequest, (HttpServletResponse) servletResponse, filterChain);
     }
 

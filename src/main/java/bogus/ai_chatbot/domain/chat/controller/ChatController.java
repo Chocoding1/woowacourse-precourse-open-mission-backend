@@ -5,8 +5,10 @@ import static bogus.ai_chatbot.domain.common.exception.error.ErrorCode.INVALID_U
 import bogus.ai_chatbot.domain.chat.dto.ChatRequest;
 import bogus.ai_chatbot.domain.chat.dto.ChatResponse;
 import bogus.ai_chatbot.domain.chat.dto.ConversationsDto;
+import bogus.ai_chatbot.domain.chat.dto.MessagesDto;
 import bogus.ai_chatbot.domain.chat.service.ChatService;
 import bogus.ai_chatbot.domain.chat.service.ConversationService;
+import bogus.ai_chatbot.domain.chat.service.MessageService;
 import bogus.ai_chatbot.domain.common.api.dto.CustomApiResponse;
 import bogus.ai_chatbot.domain.common.exception.exception.ChatException;
 import bogus.ai_chatbot.domain.security.dto.CustomUserDetails;
@@ -36,6 +38,7 @@ public class ChatController {
 
     private final ChatService chatService;
     private final ConversationService conversationService;
+    private final MessageService messageService;
 
     @Operation(summary = "로그인한 사용자의 채팅방 목록 반환", description = "로그인한 사용자의 채팅방 목록(id, title) 마지막 수정 날짜 기준 내림차순으로 반환")
     @ApiResponses({
@@ -50,6 +53,14 @@ public class ChatController {
         ConversationsDto conversationsDto = conversationService.getConversations(memberId);
 
         return ResponseEntity.ok(CustomApiResponse.of("채팅방 목록 조회 성공", conversationsDto));
+    }
+
+    @GetMapping("/conversations/{conversationId}")
+    public ResponseEntity<CustomApiResponse<MessagesDto>> getMessages(
+            @PathVariable Long conversationId) {
+        MessagesDto messagesDto = messageService.getMessages(conversationId);
+
+        return ResponseEntity.ok(CustomApiResponse.of("대화 내용 조회 성공", messagesDto));
     }
 
     @Operation(summary = "새로운 채팅방에서 prompt 작성", description = "prompt를 전송하면 새로운 채팅방 만들어서 응답 반환 + 새로운 채팅방 URI로 redirect 요청")
