@@ -64,7 +64,7 @@ public class SecurityConfig {
 
                                 corsConfiguration.setExposedHeaders(List.of("Authorization", "Authorization-Refresh"));
 
-                                return null;
+                                return corsConfiguration;
                             }
                         }))
 
