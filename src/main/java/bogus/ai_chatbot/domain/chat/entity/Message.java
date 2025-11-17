@@ -10,6 +10,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.Lob;
 import jakarta.persistence.ManyToOne;
 import java.time.LocalDateTime;
 import lombok.AccessLevel;
@@ -39,6 +40,7 @@ public class Message {
     @Enumerated(value = EnumType.STRING)
     private Role role;
 
+    @Lob
     private String content;
 
     @CreatedDate
