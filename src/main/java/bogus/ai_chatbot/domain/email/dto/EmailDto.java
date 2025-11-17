@@ -12,8 +12,8 @@ import lombok.Setter;
 @Builder
 public class EmailDto {
 
-//    @Schema(description = "이메일", example = "email@naver.com")
+    @Schema(description = "이메일", example = "email@naver.com")
     private String email;
-//    @Schema(description = "이메일 인증코드", example = "123456")
+    @Schema(description = "이메일 인증코드", example = "123456")
     private String authCode;
 }
