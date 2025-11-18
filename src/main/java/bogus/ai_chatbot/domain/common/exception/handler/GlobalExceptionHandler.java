@@ -2,6 +2,7 @@ package bogus.ai_chatbot.domain.common.exception.handler;
 
 import bogus.ai_chatbot.domain.common.exception.error.ErrorCode;
 import bogus.ai_chatbot.domain.common.exception.error.dto.ErrorResponse;
+import bogus.ai_chatbot.domain.common.exception.exception.AuthException;
 import bogus.ai_chatbot.domain.common.exception.exception.ChatException;
 import bogus.ai_chatbot.domain.common.exception.exception.CustomException;
 import java.util.HashMap;
@@ -23,6 +24,15 @@ public class GlobalExceptionHandler {
         ErrorCode errorCode = e.getErrorCode();
 
         return ResponseEntity.status(errorCode.getStatus())
+                .body(ErrorResponse.of(errorCode.getStatus(), errorCode.getCode(), errorCode.getMessage()));
+    }
+
+    @ExceptionHandler
+    public ResponseEntity<ErrorResponse> handleAuthException(AuthException e) {
+        log.info("GlobalExceptionHandler");
+        ErrorCode errorCode = e.getErrorCode();
+
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
                 .body(ErrorResponse.of(errorCode.getStatus(), errorCode.getCode(), errorCode.getMessage()));
     }
 

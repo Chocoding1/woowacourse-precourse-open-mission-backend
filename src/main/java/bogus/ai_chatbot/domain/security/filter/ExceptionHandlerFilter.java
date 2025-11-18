@@ -10,6 +10,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 @Slf4j
@@ -34,7 +35,7 @@ public class ExceptionHandlerFilter extends OncePerRequestFilter {
                 errorCode.getMessage());
 
         ObjectMapper om = new ObjectMapper();
-        response.setStatus(errorCode.getStatus().value());
+        response.setStatus(HttpStatus.UNAUTHORIZED.value());
         response.setContentType("application/json");
         response.setCharacterEncoding("utf-8");
         response.getWriter().write(om.writeValueAsString(errorResponse));
