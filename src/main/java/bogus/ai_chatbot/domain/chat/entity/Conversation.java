@@ -40,7 +40,6 @@ public class Conversation {
     @CreatedDate
     private LocalDateTime createdAt;
 
-    @LastModifiedDate
     private LocalDateTime modifiedAt;
 
     public void updateModifiedAt(LocalDateTime modifiedAt) {
