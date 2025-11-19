@@ -3,7 +3,6 @@ package bogus.ai_chatbot.domain.common.exception.handler;
 import bogus.ai_chatbot.domain.common.exception.error.ErrorCode;
 import bogus.ai_chatbot.domain.common.exception.error.dto.ErrorResponse;
 import bogus.ai_chatbot.domain.common.exception.exception.AuthException;
-import bogus.ai_chatbot.domain.common.exception.exception.ChatException;
 import bogus.ai_chatbot.domain.common.exception.exception.CustomException;
 import java.util.HashMap;
 import java.util.Map;
@@ -46,15 +45,5 @@ public class GlobalExceptionHandler {
 
         return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                 .body(ErrorResponse.ofFieldErrors(HttpStatus.BAD_REQUEST, "VALIDATION_ERROR", "입력값이 유효하지 않습니다.", errorFields));
-    }
-
-    @ExceptionHandler
-    public ResponseEntity<ErrorResponse> handleChatException(ChatException e) {
-        log.info("GlobalExceptionHandler");
-        ErrorCode errorCode = e.getErrorCode();
-        String redirectUri = "/chats";
-
-        return ResponseEntity.status(errorCode.getStatus())
-                .body(ErrorResponse.ofRedirectUri(errorCode.getStatus(), errorCode.getCode(), errorCode.getMessage(), redirectUri));
     }
 }

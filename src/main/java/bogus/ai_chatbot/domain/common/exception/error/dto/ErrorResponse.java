@@ -13,7 +13,6 @@ public class ErrorResponse {
     private String errorCode;
     private String errorMessage;
     private Map<String, String> errorFields;
-    private String redirectUri;
 
     public static ErrorResponse of(HttpStatus status, String errorCode, String errorMessage) {
         return ErrorResponse.builder()
@@ -30,16 +29,6 @@ public class ErrorResponse {
                 .errorCode(errorCode)
                 .errorMessage(errorMessage)
                 .errorFields(errorFields)
-                .build();
-    }
-
-    public static ErrorResponse ofRedirectUri(HttpStatus status, String errorCode, String errorMessage,
-                                              String redirectUri) {
-        return ErrorResponse.builder()
-                .status(status)
-                .errorCode(errorCode)
-                .errorMessage(errorMessage)
-                .redirectUri(redirectUri)
                 .build();
     }
 }
