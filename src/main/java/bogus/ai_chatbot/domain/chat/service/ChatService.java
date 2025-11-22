@@ -33,8 +33,7 @@ public class ChatService {
     // 기존 Conversation으로 요청(conversationId 필수)
     @Transactional
     public String getResponseMessageWhenMember(Long conversationId, String prompt) {
-        Conversation conversation = conversationRepository.findById(conversationId)
-                .orElseThrow(() -> new ChatException(CONVERSATION_NOT_FOUND));
+        Conversation conversation = getConversation(conversationId);
 
         Message requestMessage = createMessage(prompt, conversation, USER);
 
@@ -47,6 +46,11 @@ public class ChatService {
         conversation.updateModifiedAt(responseMessage.getCreatedAt());
 
         return initialResponseMessage;
+    }
+
+    private Conversation getConversation(Long conversationId) {
+        return conversationRepository.findById(conversationId)
+                .orElseThrow(() -> new ChatException(CONVERSATION_NOT_FOUND));
     }
 
     private String getResponseMessage(String prompt) {

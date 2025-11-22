@@ -22,8 +22,7 @@ public class MessageService {
     private final ConversationRepository conversationRepository;
 
     public MessagesDto getMessages(Long conversationId) {
-        Conversation conversation = conversationRepository.findById(conversationId)
-                .orElseThrow(() -> new ChatException(ErrorCode.CONVERSATION_NOT_FOUND));
+        Conversation conversation = getConversation(conversationId);
 
         List<Message> messages = messageRepository.findByConversationOrderByCreatedAtAsc(
                 conversation);
@@ -33,5 +32,10 @@ public class MessageService {
                 .toList();
 
         return new MessagesDto(messageDtos);
+    }
+
+    private Conversation getConversation(Long conversationId) {
+        return conversationRepository.findById(conversationId)
+                .orElseThrow(() -> new ChatException(ErrorCode.CONVERSATION_NOT_FOUND));
     }
 }

@@ -56,6 +56,10 @@ public class CustomLogoutFilter extends GenericFilterBean {
 
         jwtUtil.deleteRefreshToken(refreshToken);
 
+        setResponse(response);
+    }
+
+    private static void setResponse(HttpServletResponse response) throws IOException {
         response.setStatus(200);
         response.setCharacterEncoding("utf-8");
         response.setContentType("application/json");

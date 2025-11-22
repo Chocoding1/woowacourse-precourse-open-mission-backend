@@ -23,13 +23,9 @@ public class ConversationService {
     private final MemberRepository memberRepository;
 
     public Long addConversation(Long memberId, String prompt) {
-        Member member = memberRepository.findById(memberId)
-                .orElseThrow(() -> new ChatException(MEMBER_NOT_FOUND));
+        Member member = getMember(memberId);
 
-        Conversation conversation = Conversation.builder()
-                .title(prompt)
-                .member(member)
-                .build();
+        Conversation conversation = createConversation(prompt, member);
 
         conversationRepository.save(conversation);
 
@@ -37,13 +33,24 @@ public class ConversationService {
     }
 
     public ConversationsDto getConversations(Long memberId) {
-        Member member = memberRepository.findById(memberId)
-                .orElseThrow(() -> new ChatException(MEMBER_NOT_FOUND));
+        Member member = getMember(memberId);
 
         List<ConversationDto> conversationDtos = conversationRepository.findByMemberOrderByModifiedAtDesc(member).stream()
                 .map(conversation -> new ConversationDto((conversation.getId()), conversation.getTitle()))
                 .toList();
 
         return new ConversationsDto(conversationDtos);
+    }
+
+    private Member getMember(Long memberId) {
+        return memberRepository.findById(memberId)
+                .orElseThrow(() -> new ChatException(MEMBER_NOT_FOUND));
+    }
+
+    private static Conversation createConversation(String prompt, Member member) {
+        return Conversation.builder()
+                .title(prompt)
+                .member(member)
+                .build();
     }
 }

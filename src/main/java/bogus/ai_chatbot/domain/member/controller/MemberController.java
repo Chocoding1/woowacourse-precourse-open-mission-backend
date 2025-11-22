@@ -31,7 +31,6 @@ public class MemberController {
     @PostMapping
     public ResponseEntity<CustomApiResponse<String>> joinMember(@Validated @RequestBody MemberJoinDto memberJoinDto) {
         memberService.join(memberJoinDto);
-
         return ResponseEntity.status(201).body(CustomApiResponse.from("회원가입 성공"));
     }
 }

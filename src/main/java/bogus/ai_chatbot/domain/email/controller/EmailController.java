@@ -31,7 +31,6 @@ public class EmailController {
     @PostMapping("/send-code")
     public ResponseEntity<CustomApiResponse<String>> sendCode(@RequestBody EmailDto emailDto) throws MessagingException {
         emailService.sendAuthCode(emailDto);
-
         return ResponseEntity.ok(CustomApiResponse.from("인증코드 전송 완료"));
     }
 
@@ -44,7 +43,6 @@ public class EmailController {
     @PostMapping("/verify-code")
     public ResponseEntity<CustomApiResponse<String>> verifyCode(@RequestBody EmailDto emailDto) {
         emailService.verifyAuthCode(emailDto);
-
         return ResponseEntity.ok(CustomApiResponse.from("이메일 인증 성공"));
     }
 }

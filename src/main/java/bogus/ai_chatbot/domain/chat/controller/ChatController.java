@@ -108,7 +108,6 @@ public class ChatController {
         log.info("oldChat");
 
         if (customUserDetails == null) {
-            // 예외 발생 후 새로운 채팅 endpoint로 redirect
             throw new ChatException(INVALID_URI);
         }
 
