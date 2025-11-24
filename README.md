@@ -62,8 +62,28 @@
 # ERD
 <img width="1120" height="320" alt="Image" src="https://github.com/user-attachments/assets/96efffff-6f15-473f-aaed-12cfd5c18965" />
 
-
-
+---
+# 실제 화면
+## 홈화면(로그인 X)
 <img width="1916" height="953" alt="Image" src="https://github.com/user-attachments/assets/a837960e-40dc-4628-b845-b5f0ae1f07ac" />
-<img width="1918" height="952" alt="Image" src="https://github.com/user-attachments/assets/4bc139b3-f0c5-4865-9135-e2bfee04496a" />
+
+## 홈화면(로그인 O)
 <img width="1918" height="947" alt="Image" src="https://github.com/user-attachments/assets/33314ce3-080c-4344-9752-398cce0253e1" />
+
+## 로그인 화면
+<img width="1917" height="951" alt="Image" src="https://github.com/user-attachments/assets/d7ddacc2-b1d9-4322-9427-3902d88e23c0" />
+
+## 회원가입 화면
+<img width="1917" height="943" alt="Image" src="https://github.com/user-attachments/assets/d218b7ba-7791-4a2f-baf8-33ca123bced8" />
+
+## 회원가입 화면(이메일 인증코드 전송 후)
+<img width="1918" height="952" alt="Image" src="https://github.com/user-attachments/assets/4bc139b3-f0c5-4865-9135-e2bfee04496a" />
+
+## 채팅 화면(로그인 X)
+<img width="1916" height="950" alt="Image" src="https://github.com/user-attachments/assets/6a69192b-c59b-4971-a6ff-c6e926fda43e" />
+
+## 채팅 화면(로그인 O)
+<img width="1918" height="949" alt="Image" src="https://github.com/user-attachments/assets/4ba2de3a-01f1-495a-bf95-b80691963940" />
+
+## 채팅 화면(로그인 O + 새로운 채팅)
+<img width="1919" height="949" alt="Image" src="https://github.com/user-attachments/assets/ed62fdae-22df-4566-9f32-91b95e83fdec" />
