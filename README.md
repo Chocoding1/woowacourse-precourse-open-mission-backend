@@ -1,5 +1,10 @@
 # AI 챗봇 서비스
 
+# 기술 스택
+- Backend : Spring Boot, Spring Data JPA, Spring Security
+- Database : MySQL, Redis
+- Test : JUnit
+
 # 주요 기능
 ## 1. 사용자 인증
 ### [회원가입]
@@ -35,8 +40,9 @@
 |기능|URL|HTTP Method|인증 여부|
 |---|---|---|---|
 |**새로운 채팅방에서 채팅**|**/chats**|**POST**|**O/X**|
-|**기존 채팅방에서 채팅**|**/chats/{id}**|**POST**|**O**|
-|**로그인한 사용자의 채팅방 목록 반환**|**/chats/conversations**|**GET**|**O**|
+|**기존 채팅방에서 채팅**|**/chats/{conversationId}**|**POST**|**O**|
+|**로그인한 사용자의 채팅방 목록 조회**|**/chats/conversations**|**GET**|**O**|
+|**로그인한 사용자의 특정 채팅방 대화 기록 조회**|**/chats/conversations/{conversationId}**|**GET**|**O**|
 
 ## 이메일
 |기능|URL|HTTP Method|인증 여부|
@@ -48,3 +54,7 @@
 |기능|URL|HTTP Method|인증 여부|
 |---|---|---|---|
 |**토큰 재발급**|**/jwts/reissue**|**POST**|**O**|
+
+---
+# ERD
+
