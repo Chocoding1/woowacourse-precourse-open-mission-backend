@@ -1,9 +1,9 @@
 # AI 챗봇 서비스
 
 # 기술 스택
-- Backend : Spring Boot, Spring Data JPA, Spring Security
-- Database : MySQL, Redis
-- Test : JUnit
+- **Backend : Spring Boot, Spring Data JPA, Spring Security**
+- **Database : MySQL, Redis**
+- **Test : JUnit**
 
 # 주요 기능
 ## 1. 사용자 인증
