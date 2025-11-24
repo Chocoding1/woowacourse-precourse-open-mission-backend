@@ -63,6 +63,185 @@
 <img width="1120" height="320" alt="Image" src="https://github.com/user-attachments/assets/96efffff-6f15-473f-aaed-12cfd5c18965" />
 
 ---
+# 프로젝트 구조
+```
+src
+    ├─main
+    │  ├─java
+    │  │  └─bogus
+    │  │      └─ai_chatbot
+    │  │          │  AiChatbotApplication.java
+    │  │          │  
+    │  │          ├─config
+    │  │          │      OpenAiConfig.java
+    │  │          │      OpenApiConfig.java
+    │  │          │      RedisConfig.java
+    │  │          │      SecurityConfig.java
+    │  │          │      WebConfig.java
+    │  │          │      
+    │  │          ├─domain
+    │  │          │  ├─chat
+    │  │          │  │  ├─controller
+    │  │          │  │  │      ChatController.java
+    │  │          │  │  │      
+    │  │          │  │  ├─dto
+    │  │          │  │  │      ChatRequest.java
+    │  │          │  │  │      ChatResponse.java
+    │  │          │  │  │      ConversationDto.java
+    │  │          │  │  │      ConversationsDto.java
+    │  │          │  │  │      MessageDto.java
+    │  │          │  │  │      MessagesDto.java
+    │  │          │  │  │      
+    │  │          │  │  ├─entity
+    │  │          │  │  │  │  Conversation.java
+    │  │          │  │  │  │  Message.java
+    │  │          │  │  │  │  
+    │  │          │  │  │  └─field
+    │  │          │  │  │          Role.java
+    │  │          │  │  │          
+    │  │          │  │  ├─repository
+    │  │          │  │  │      ConversationRepository.java
+    │  │          │  │  │      MessageRepository.java
+    │  │          │  │  │      
+    │  │          │  │  └─service
+    │  │          │  │          ChatService.java
+    │  │          │  │          ConversationService.java
+    │  │          │  │          MessageService.java
+    │  │          │  │          
+    │  │          │  ├─common
+    │  │          │  │  ├─api
+    │  │          │  │  │  └─dto
+    │  │          │  │  │          CustomApiResponse.java
+    │  │          │  │  │          
+    │  │          │  │  └─exception
+    │  │          │  │      ├─error
+    │  │          │  │      │  │  ErrorCode.java
+    │  │          │  │      │  │  
+    │  │          │  │      │  └─dto
+    │  │          │  │      │          ErrorResponse.java
+    │  │          │  │      │          
+    │  │          │  │      ├─exception
+    │  │          │  │      │      AuthException.java
+    │  │          │  │      │      BusinessException.java
+    │  │          │  │      │      ChatException.java
+    │  │          │  │      │      CustomException.java
+    │  │          │  │      │      
+    │  │          │  │      └─handler
+    │  │          │  │              GlobalExceptionHandler.java
+    │  │          │  │              
+    │  │          │  ├─email
+    │  │          │  │  ├─controller
+    │  │          │  │  │      EmailController.java
+    │  │          │  │  │      
+    │  │          │  │  ├─dto
+    │  │          │  │  │      EmailDto.java
+    │  │          │  │  │      
+    │  │          │  │  └─service
+    │  │          │  │          EmailService.java
+    │  │          │  │          
+    │  │          │  ├─jwt
+    │  │          │  │  ├─controller
+    │  │          │  │  │      ReissueController.java
+    │  │          │  │  │      
+    │  │          │  │  ├─dto
+    │  │          │  │  │      JwtInfoDto.java
+    │  │          │  │  │      
+    │  │          │  │  ├─service
+    │  │          │  │  │      ReissueService.java
+    │  │          │  │  │      
+    │  │          │  │  └─util
+    │  │          │  │          JwtUtil.java
+    │  │          │  │          
+    │  │          │  ├─member
+    │  │          │  │  ├─controller
+    │  │          │  │  │      MemberController.java
+    │  │          │  │  │      
+    │  │          │  │  ├─dto
+    │  │          │  │  │      MemberJoinDto.java
+    │  │          │  │  │      MemberLoginDto.java
+    │  │          │  │  │      MemberSessionDto.java
+    │  │          │  │  │      
+    │  │          │  │  ├─entity
+    │  │          │  │  │      Member.java
+    │  │          │  │  │      
+    │  │          │  │  ├─repository
+    │  │          │  │  │      MemberRepository.java
+    │  │          │  │  │      
+    │  │          │  │  └─service
+    │  │          │  │          MemberService.java
+    │  │          │  │          
+    │  │          │  ├─openai
+    │  │          │  │  ├─dto
+    │  │          │  │  │      OpenAiMessage.java
+    │  │          │  │  │      OpenAiRequest.java
+    │  │          │  │  │      OpenAiResponse.java
+    │  │          │  │  │      
+    │  │          │  │  └─service
+    │  │          │  │          OpenAiClient.java
+    │  │          │  │          
+    │  │          │  ├─redis
+    │  │          │  │  └─service
+    │  │          │  │          RedisService.java
+    │  │          │  │          
+    │  │          │  └─security
+    │  │          │      ├─dto
+    │  │          │      │      CustomUserDetails.java
+    │  │          │      │      
+    │  │          │      ├─filter
+    │  │          │      │      CustomLogoutFilter.java
+    │  │          │      │      ExceptionHandlerFilter.java
+    │  │          │      │      JwtAuthenticationFilter.java
+    │  │          │      │      LoginFilter.java
+    │  │          │      │      
+    │  │          │      ├─properties
+    │  │          │      │      PermitPaths.java
+    │  │          │      │      
+    │  │          │      └─service
+    │  │          │              CustomUserDetailsService.java
+    │  │          │              
+    │  │          └─testdata
+    │  │                  TestData.java
+    │  │                  
+    │  └─resources
+    │      │  application.yml
+    │      │  
+    │      ├─static
+    │      └─templates
+    └─test
+        └─java
+            └─bogus
+                └─ai_chatbot
+                    │  AiChatbotApplicationTests.java
+                    │  
+                    └─domain
+                        ├─chat
+                        │  └─service
+                        │          ChatServiceTest.java
+                        │          ConversationServiceTest.java
+                        │          MessageServiceTest.java
+                        │          
+                        ├─email
+                        │  └─service
+                        │          EmailServiceTest.java
+                        │          
+                        ├─member
+                        │  └─service
+                        │          MemberServiceTest.java
+                        │          
+                        ├─openai
+                        │  └─service
+                        │          OpenAiClientTest.java
+                        │          
+                        └─security
+                            ├─filter
+                            │      CustomLogoutFilterTest.java
+                            │      JwtAuthenticationFilterTest.java
+                            │      LoginFilterTest.java
+                            │      
+                            └─service
+                                    CustomUserDetailsServiceTest.java
+```
+---
 # 실제 화면
 ## 홈화면(로그인 X)
 <img width="1916" height="953" alt="Image" src="https://github.com/user-attachments/assets/a837960e-40dc-4628-b845-b5f0ae1f07ac" />
