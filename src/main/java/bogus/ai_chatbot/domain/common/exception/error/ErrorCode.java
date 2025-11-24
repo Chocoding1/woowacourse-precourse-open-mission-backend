@@ -12,7 +12,7 @@ public enum ErrorCode {
     EMAIL_NOT_VERIFIED("EMAIL_NOT_VERIFIED", HttpStatus.BAD_REQUEST, "이메일 인증이 되지 않았습니다."),
     MEMBER_NOT_FOUND("MEMBER_NOT_FOUND", HttpStatus.NOT_FOUND, "존재하지 않는 회원입니다."),
     LOGIN_FAILED("LOGIN_FAILED", HttpStatus.BAD_REQUEST, "이메일 또는 비밀번호가 일치하지 않습니다."),
-    INVALID_LOGIN_FORM("INVALID_LOGIN_FOMR", HttpStatus.BAD_REQUEST, "로그인 정보가 유효하지 않습니다."),
+    INVALID_LOGIN_FORM("INVALID_LOGIN_FORM", HttpStatus.BAD_REQUEST, "로그인 정보가 유효하지 않습니다."),
 
     // CHAT
     CONVERSATION_NOT_FOUND("CONVERSATION_NOT_FOUND", HttpStatus.NOT_FOUND, "존재하지 않는 채팅방입니다."),
