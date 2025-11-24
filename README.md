@@ -12,7 +12,7 @@
   - **[예외 처리]** 이메일, 비밀번호, 이름을 입력하지 않을 경우 예외를 발생시킨다.
 - 사용자는 이메일 인증을 해야 회원가입할 수 있습니다.
   - **[예외 처리]** 해당 이메일로 가입한 이력이 존재할 경우 예외를 발생시킨다.
-  - **[예외 처리]** 이메일 인증 번호가 일치하지 않을 경우 예외를 발생시킨다.
+  - **[예외 처리]** 이메일 인증코드가 일치하지 않을 경우 예외를 발생시킨다.
 
 ### [로그인]
 - 사용자는 가입 시 사용한 이메일, 비밀번호를 이용해 로그인할 수 있습니다.
@@ -61,3 +61,9 @@
 ---
 # ERD
 <img width="1120" height="320" alt="Image" src="https://github.com/user-attachments/assets/96efffff-6f15-473f-aaed-12cfd5c18965" />
+
+
+
+<img width="1916" height="953" alt="Image" src="https://github.com/user-attachments/assets/a837960e-40dc-4628-b845-b5f0ae1f07ac" />
+<img width="1918" height="952" alt="Image" src="https://github.com/user-attachments/assets/4bc139b3-f0c5-4865-9135-e2bfee04496a" />
+<img width="1918" height="947" alt="Image" src="https://github.com/user-attachments/assets/33314ce3-080c-4344-9752-398cce0253e1" />
